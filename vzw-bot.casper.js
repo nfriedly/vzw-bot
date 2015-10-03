@@ -7,9 +7,24 @@ var usageMsg = [
     'vzw-bot --username=foo@bar.com --password=abc123 --secret="secret question answer'
 ].join('\n');
 
+function handleTimeout() {
+    this.capture('./screen.png');
+    this.echo("Timeout reached, screenshot saved");
+    this.exit(1);
+}
+
 var casper = require('casper').create({
     //verbose: true,
     //logLevel: 'debug'
+    onError: function(message, stack) {
+        this.capture('./screen.png');
+        this.echo("Error: " + message);
+        this.echo('Stack:\n  ' + stack.join('  \n'));
+        this.exit(1);
+    },
+    onStepTimeout: handleTimeout,
+    onTimeout: handleTimeout,
+    onWaitTimeout: handleTimeout
 });
 
 casper.options.waitTimeout = 15*1000;
@@ -58,9 +73,9 @@ casper.then( function buyTickets() {
     this.fill('#form_buytickets', { ticketQty: 10, agreement: true }, true);
 });
 
-casper.then( function done() {
+casper.waitForSelector('#ocBox', function done() {
     this.echo("Done!");
-    this.capture('./done.png');
+    this.capture('./screen.png');
 });
 
 casper.run();

@@ -17,6 +17,11 @@ First create a file named `.env` and add the following:
 VZW_USERNAME=<your Verizon username or phone number>
 VZW_PASSWORD=<your Verizon password>
 VZW_SECRET=<answer to your your verizon secret question>
+
+# optional - send yourself an email with the results
+EMAIL=<your email address>
+SENDGRID_USERNAME=<your sendgrid username>
+SENDGRID_PASSWORD=<your sendgrid password>
 ```
 
 (Or set up equivalent environment properties.)
@@ -49,6 +54,7 @@ Set up the environment properties
 Add the cronjob addon:
 
     heroku addons:create scheduler
+    heroku addons:create sendgrid
   
 Open the cronjob config page:
 
