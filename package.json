@@ -1,0 +1,27 @@
+{
+  "name": "vzw-bot",
+  "version": "1.0.0",
+  "description": "Logs into my verizon and enters a sweepstakes for you",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nfriedly/vzw-bot.git"
+  },
+  "keywords": [
+    "verizon"
+  ],
+  "author": "Nathan Friedly - http://nfriedly.com/",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nfriedly/vzw-bot/issues"
+  },
+  "homepage": "https://github.com/nfriedly/vzw-bot#readme",
+  "dependencies": {
+    "casperjs": "^1.1.0-beta3",
+    "dotenv": "^1.2.0",
+    "phantomjs": "^1.9.18"
+  }
+}

@@ -6,26 +6,26 @@ Logs into your Verizon account and enters the Samsung tablet sweepstakes for you
 Installation
 ------------
 
-Install [CasperJS](http://casperjs.org/) and [PhantomJS](http://phantomjs.org/) globally. 
-They aren't node.js modules, but if you have node then you can run 
-`npm install -g phantomjs casperjs` to get both installed globally.
-
-Then copy this code (at least the `index.js`) somewhere.
+Requires node.js >= 4.x, then from the directory with the code run `npm install`.
 
 Usage
 -----
-To use this script on your computer, run `casperjs index.js` from the command line to log in perform an entry. 
-The following arguments are all required:
- * *username*: your Verizon username or phone number
- * *password*: your Verizon password
- * *Security questions*: Copy all of your security questions and your answers. Format them like so: 
-    `--"What's your pets name?"="Rover"`
 
-All arguments should be prefixed with `--` and seperated from their values by an `=` (no spaces). So, alltogether, the command would look like this:
+First create a file named `.env` and add the following:
 
-    elance-withdrawal --username=foo@bar.com --password=abc123 --"security question?"="security answer" --"other security question?"="other answer"
+```
+VZW_USERNAME=<your Verizon username or phone number>
+VZW_PASSWORD=<your Verizon password>
+VZW_SECRET=<answer to your your verizon secret question>
+```
 
-Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"
+(Or set up equivalent environment properties.)
+
+Then run `npm start`.
+
+That's all it takes to get started! However, while you can use this script as-is, it's intended to be a starting point 
+to do your own thing with your verizon points. (Bid on an auction, enter a different sweepstakes, or just rack up points 
+without spending them.)
 
 Heroku Usage
 ------------
@@ -36,22 +36,25 @@ Complete instructions for how to use heroku is beyond the scope of this document
 
 The following instructions require the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
-Create the app with the casperjs buildpack from http://github.com/misza222/heroku-buildpack-casperjs
+First create an app:
 
-    heroku apps:create [optional-app-name] --stack cedar --buildpack http://github.com/misza222/heroku-buildpack-casperjs.git
-  
-Add some logging and cronjob support:
+    heroku apps:create [optional-app-name]
+    
+Set up the environment properties
 
-    heroku addons:create logentries
+    heroku config:set VZW_USERNAME=<your Verizon username or phone number>
+    heroku config:set VZW_PASSWORD=<your Verizon password>
+    heroku config:set VZW_SECRET=<answer to your your verizon secret question>
+    
+Add the cronjob addon:
+
     heroku addons:create scheduler
   
 Open the cronjob config page:
 
     heroku addons:open scheduler
   
-Set the cronjob to run your complete withdrawal command like so:
-
-    ./vendor/casperjs/bin/casperjs index.js --username=you@yoursite.com --password=... etc.
+Set the cronjob to run the command `npm start` once per day. (Or perhaps more often if you're doing auction stuff.)
     
 If it doesn't seem to be working, run `heroku run bash` to open a shell on a new server instance. Then you can try running different commands and see what's going on.
 
