@@ -44,7 +44,7 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
         from: process.env.EMAIL,
         subject: '[vzw-bot] ' + (result.status == 0 ?  'Success' : 'Error') ,
         text: contents,
-        html: contents.replace(/\n/, '<br>'),
+        html: contents.replace(/\n/g, '<br>'),
     };
 
     // todo: figure out how to catch errors in casper and then screenshot so that we get one of the error results too
