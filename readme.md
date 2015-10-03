@@ -1,18 +1,23 @@
 Elance Automatic Withdrawal Bot
 ===============================
 
-Logs into your Verizon account and enters the Samsung tablet sweepstakes
+Logs into your Verizon account and enters the Samsung tablet sweepstakes for you.
 
 Installation
 ------------
 
- todo
+Install [CasperJS](http://casperjs.org/) and [PhantomJS](http://phantomjs.org/) globally. 
+They aren't node.js modules, but if you have node then you can run 
+`npm install -g phantomjs casperjs` to get both installed globally.
+
+Then copy this code (at least the `index.js`) somewhere.
 
 Usage
 -----
-To use this script on your computer, run `casperjs index.js` from the command line to perform an entry. The folowing arguments are all required:
- * *username*: your Elance username or email address
- * *password*: your Elance password
+To use this script on your computer, run `casperjs index.js` from the command line to log in perform an entry. 
+The following arguments are all required:
+ * *username*: your Verizon username or phone number
+ * *password*: your Verizon password
  * *Security questions*: Copy all of your security questions and your answers. Format them like so: 
     `--"What's your pets name?"="Rover"`
 
@@ -25,7 +30,11 @@ Tip: you can shorten the security question to a smaller substring such as --pet=
 Heroku Usage
 ------------
 
-This script can be run on a free [Heroku](http://www.heroku.com/) server with a little bit of setup. Complete instructions for how to use heroku is beyond the scope of this document, but they have [very good documentation](https://devcenter.heroku.com/). The following instructions require the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+This script can be run on a free [Heroku](http://www.heroku.com/) server with a little bit of setup. 
+Complete instructions for how to use heroku is beyond the scope of this document, but they have 
+[very good documentation](https://devcenter.heroku.com/). 
+
+The following instructions require the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
 Create the app with the casperjs buildpack from http://github.com/misza222/heroku-buildpack-casperjs
 
@@ -33,8 +42,8 @@ Create the app with the casperjs buildpack from http://github.com/misza222/herok
   
 Add some logging and cronjob support:
 
-    heroku addons:add logentries
-    heroku addons:add scheduler
+    heroku addons:create logentries
+    heroku addons:create scheduler
   
 Open the cronjob config page:
 
