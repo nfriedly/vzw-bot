@@ -20,6 +20,7 @@ VZW_SECRET=<answer to your your verizon secret question>
 
 # optional - send yourself an email with the results
 EMAIL=<your email address>
+EMAIL_ON_SUCCESS=true
 SENDGRID_USERNAME=<your sendgrid username>
 SENDGRID_PASSWORD=<your sendgrid password>
 ```
@@ -54,7 +55,6 @@ Set up the environment properties
 Add the cronjob addon:
 
     heroku addons:create scheduler
-    heroku addons:create sendgrid
   
 Open the cronjob config page:
 
@@ -63,6 +63,12 @@ Open the cronjob config page:
 Set the cronjob to run the command `npm start` once per day. (Or perhaps more often if you're doing auction stuff.)
     
 If it doesn't seem to be working, run `heroku run bash` to open a shell on a new server instance. Then you can try running different commands and see what's going on.
+
+Optionally email yourself results:
+
+    heroku addons:create sendgrid
+    heroku config:set EMAIL=<your email>
+    heroku config:set EMAIL_ON_SUCCESS=true
 
 
 MIT License
