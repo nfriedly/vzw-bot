@@ -1,4 +1,4 @@
-Elance Automatic Withdrawal Bot
+Verizon "Smart Rewards" Bot
 ===============================
 
 Logs into your Verizon account and enters the Samsung tablet sweepstakes for you.
