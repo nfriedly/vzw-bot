@@ -1,28 +1,24 @@
 Elance Automatic Withdrawal Bot
 ===============================
 
-Logs into your Elance account and withdrawals any available funds to the account you specify.
+Logs into your Verizon account and enters the Samsung tablet sweepstakes
 
 Installation
 ------------
-Run the following command on your command line to install this script:
 
-    npm install -g elance-withdrawal
-    
-(Requires node.js - download it from http://nodejs.org/)
+ todo
 
 Usage
 -----
-To use this script on your computer, run `elance-withdrawal` from the command line to perform a withdrawal. The folowing arguments are all required:
+To use this script on your computer, run `casperjs index.js` from the command line to perform an entry. The folowing arguments are all required:
  * *username*: your Elance username or email address
  * *password*: your Elance password
- * *withdrawal-account-id*: This is Elance's internal ID for your bank or paypal account. To find it, view-source on the [withdrawal](https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php) form, find the `<select>` dropdown that lists your accounts, and find `<option>` that lists your account. It should have a `value="some number"` - that number is the account ID.
  * *Security questions*: Copy all of your security questions and your answers. Format them like so: 
     `--"What's your pets name?"="Rover"`
 
 All arguments should be prefixed with `--` and seperated from their values by an `=` (no spaces). So, alltogether, the command would look like this:
 
-    elance-withdrawal --username=foo@bar.com --password=abc123 --withdrawal-account-id=12434567 --"security question?"="security answer" --"other security question?"="other answer"
+    elance-withdrawal --username=foo@bar.com --password=abc123 --"security question?"="security answer" --"other security question?"="other answer"
 
 Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"
 
@@ -49,13 +45,6 @@ Set the cronjob to run your complete withdrawal command like so:
     ./vendor/casperjs/bin/casperjs index.js --username=you@yoursite.com --password=... etc.
     
 If it doesn't seem to be working, run `heroku run bash` to open a shell on a new server instance. Then you can try running different commands and see what's going on.
-
-Hire me :)
-----------
-
-Lets build something awesome together! My elance profile is https://www.elance.com/s/nfriedly/?rid=1IFCM
-
-However, my avaliability is pretty limited and I have to turn down the majority of the jobs I get invited to. You'll have a better shot if you send me an email first: nathan@[my website (see below)].com
 
 
 MIT License

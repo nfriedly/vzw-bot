@@ -2,46 +2,43 @@
 
 var usageMsg = [
     'Usage: ',
-    'elance-withdrawal --username=foo@bar.com --password=abc123 --withdrawal-account-id=12434567 --"security question?"="security answer" --"other security question?"="other answer"',
-    '',
-    'To find your --withdrawal-account-id, view-source on the withdrawal form and find the *VALUE* of the <option> in the select dropdown that lists your accounts.',
+    'vzw-bot --username=foo@bar.com --password=abc123 --"security question?"="security answer" --"other security question?"="other answer"',
     '',
     'Tip: you can shorten the security question to a smaller substring such as --pet=rover or --teacher="Mr.Smith"'
 ].join('\n');
 
 var casper = require('casper').create({
-    verbose: true,
-    logLevel: 'debug'
+    //verbose: true,
+    //logLevel: 'debug'
 });
 
 var timeout = 15*1000;
 
 var username = casper.cli.get("username");
 var password = casper.cli.get("password");
-var withdrawalAccountId = casper.cli.get('withdrawal-account-id'); // '';
 var securityQuestions = Object.keys(casper.cli.options).filter(function(q) {
     // everything except the args below is assumed to be a potential security question
-    return ['casper-path', 'cli', 'direct', 'engine', 'username', 'password', 'withdrawal-account-id'].indexOf(q) == -1;
+    return ['casper-path', 'cli', 'direct', 'engine', 'username', 'password'].indexOf(q) == -1;
 });
-if (!username || !password || !withdrawalAccountId || !securityQuestions.length) {
+if (!username || !password || !securityQuestions.length) {
     throw usageMsg;
 }
 
-casper.start('https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php', function loginPage() {
+casper.start('http://www.verizonwireless.com/b2c/myverizonlp/', function loginPage() {
     this.echo('Logging in...');
-    this.fill('#loginForm', { lnm: username, pwd: password }, false); // false = don't submit - all of their forms requires some magic JS to work properly
-    this.click('#spr-sign-in-btn-standard');
+    this.fill('#myaccountForm', { IDToken1: username }, false);
+    this.click("#signIntoMyVerizonButton");
 }, null, timeout);
 
-casper.waitForUrl(/securityAudit/, function securityQuestionPage() {
+casper.waitForUrl(/https:\/\/login.verizonwireless.com\/amserver\/UI\/Login/, function securityQuestionPage() {
     var securityQ = this.evaluate(function() {
-        var titles = document.querySelectorAll('div.title');
-        var securityTitleDiv = Array.prototype.filter.call(titles, function(e) {
-            return e.textContent == 'Secret Question';
-        })[0];
-        var securityQ = securityTitleDiv.getNext().textContent;
-        return securityQ;
+        return document.querySelector('#challengequestion').textContent.match(/Secret Question:\s+(.*)\s+Enter Your Answer:/)[1]
     });
+    if (!securityQ) {
+        this.echo("Unable to determine security question :(");
+        this.capture('./error.png');
+        this.debugHTML();
+    }
     var questionParam = securityQuestions.filter(function(param) {
         return securityQ.indexOf(param) != -1;
     })[0];
@@ -50,53 +47,39 @@ casper.waitForUrl(/securityAudit/, function securityQuestionPage() {
     }
     var answer = this.cli.get(questionParam);
     this.echo('Security question is "' + securityQ + '". Answering with value from --' + questionParam);
-    this.fill('#sa-securityForm', {challengeAnswer: answer}, false);
-    this.click('#ContinueLogin');
+    this.fill('#challengequestion', {IDToken1: answer}, false);
+    this.click('#signIn');
 }, null, timeout);
 
-// this must be written this way because otherwise it will run early on https://www.elance.com/php/myelance/main/index.php?redirect=https://www.elance.com/php/CommerceLegacyFrontEnd/Mops/Withdrawal/Controller/Withdraw.php?
-casper.waitForUrl(/^https:\/\/www.elance.com\/php\/CommerceLegacyFrontEnd\/Mops\/Withdrawal\/Controller\/Withdraw.php/, function withdrawalPage() {
-    var textBalance = this.evaluate(function() {
-        return document.querySelectorAll('table.withdrawTable tr:first-child td:last-child')[0].textContent;
-    });
-    
-    textBalance = textBalance.replace(/,/g, ''); // remove commas from values > $999
-    
-    console.log('Available balance is $' + textBalance);
-
-    // only continue if there is a balance alaliable
-    if (parseFloat(textBalance) > 0) {
-        // console.log('SETTING BALANCE TO 0.01 FOR TESTING'); textBalance = '0.01';
-        // wait for this form just in case
-        casper.waitForSelector('#withdrawForm', function withdrawalForm() {
-            this.fill('#withdrawForm', {method: withdrawalAccountId, txn_amount: textBalance}, false);
-            this.click('#FundWithDraw');
-        }, null, timeout);
-    } else {
-        casper.exit();
-    }
+casper.waitForSelector('#loginForm', function enterPassword() {
+    this.echo("Entering password...");
+    this.fill('#loginForm', { IDToken2: password }, false);
+    this.click("#signIn");
 }, null, timeout);
 
-casper.waitForUrl('#stage=preview', function previewPage() {
-    // this form is sometimes slow to load
-    casper.waitForSelector('#previewForm', function previewForm() {
-        this.fill('#previewForm', {password: password}, false);
-        this.click('#submit_btn');
-    }, null, timeout);
+casper.waitForUrl( /overview/, function verify() {
+    this.echo("Going to rewards site");
+    this.click('a[title="Redeem Now"]');
 }, null, timeout);
 
-var success_url_start = 'https://www.elance.com/php/framework/main/confirm.php?mode=withdraw&txn_id='
-casper.waitForUrl(success_url_start, function successPage() {
-    var transactionId = this.getGlobal('location').href.substr(success_url_start.length)
-    this.echo("Withdrawal complete, transaction ID is " + transactionId);
+casper.then( function rewardsHome() {
+    this.echo("Going to sweepstakes listing");
+    this.click('#HL-R-CurrentSweepstakes');
 }, null, timeout);
 
-/*
-casper.on('error', function(msg,backtrace) {
-  this.debugHTML();
-  this.capture('./error.png');
-  console.error(msg, '\n', JSON.stringify(backtrace));
-});
-*/
+casper.then( function findTablet() {
+    this.echo("Going to Samsung sweepstakes");
+    this.clickLabel('Samsung Galaxy Tab S 10.5 - White', 'a');
+}, null, timeout);
+
+casper.then( function buyTickets() {
+    this.echo("Buying tickets");
+    this.fill('#form_buytickets', { ticketQty: 10, agreement: true }, true);
+}, null, timeout);
+
+casper.then( function done() {
+    this.echo("Done!");
+    this.capture('./done.png');
+}, null, timeout);
 
 casper.run();
