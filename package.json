@@ -1,0 +1,24 @@
+{
+  "name": "elance-withdrawal",
+  "version": "1.0.7",
+  "description": "Automatically log into your elance account and withdrawal any avaliable balance to your specified account",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": "./index.js",
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nfriedly/elance-withdrawal.git"
+  },
+  "author": "Nathan Friedly - http://nfriedly.com/",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nfriedly/elance-withdrawal/issues"
+  },
+  "homepage": "https://github.com/nfriedly/elance-withdrawal",
+  "dependencies": {
+    "casperjs": "^1.1.0-beta3"
+  }
+}
