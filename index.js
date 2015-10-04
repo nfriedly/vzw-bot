@@ -5,6 +5,9 @@ var cp = require('child_process');
 require('dotenv').config({silent: true});
 
 console.log(require('./package.json').name + ' starting on ' + new Date().toUTCString());
+if (process.env.SOURCE) {
+    console.log("Source: " + process.env.SOURCE);
+}
 console.log('Running CasperJS script...');
 
 var result = cp.spawnSync('casperjs', [
