@@ -61,6 +61,8 @@ Open the cronjob config page:
     heroku addons:open scheduler
   
 Set the cronjob to run the command `npm start` once per day. (Or perhaps more often if you're doing auction stuff.)
+
+Note: travis has a bug where they assume a web server even though we didn't declare 
     
 If it doesn't seem to be working, run `heroku run bash` to open a shell on a new server instance. Then you can try running different commands and see what's going on.
 
@@ -70,6 +72,10 @@ Optionally email yourself results:
     heroku config:set EMAIL=<your email>
     heroku config:set EMAIL_ON_SUCCESS=true
 
+Finally, disable the default web worker and push your code
+
+    heroku ps:scale web=0 #todo: make sure this works
+    git push heroku
 
 MIT License
 ------------
