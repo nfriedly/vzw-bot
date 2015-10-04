@@ -72,10 +72,11 @@ Optionally email yourself results:
     heroku config:set EMAIL=<your email>
     heroku config:set EMAIL_ON_SUCCESS=true
 
-Finally, disable the default web worker and push your code
+Finally, push your code and then disable the default web worker that heroku creates:
 
-    heroku ps:scale web=0 #todo: make sure this works
     git push heroku
+    heroku ps:scale web=0
+
 
 MIT License
 ------------
