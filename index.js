@@ -4,13 +4,14 @@
 var cp = require('child_process');
 require('dotenv').config({silent: true});
 
-console.log('starting CasperJS...');
+console.log(require('./package.json').name + ' starting on ' + new Date().toUTCString());
+console.log('Running CasperJS script...');
 
 var result = cp.spawnSync('casperjs', [
     'vzw-bot.casper.js',
-    `--username=${process.env.VZW_USERNAME}`,
-    `--password=${process.env.VZW_PASSWORD}`,
-    `--secret=${process.env.VZW_SECRET}`
+    '--username='+process.env.VZW_USERNAME,
+    '--password='+process.env.VZW_PASSWORD,
+    '--secret='+process.env.VZW_SECRET
 ]);
 
 
@@ -45,7 +46,7 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
     var email = {
         to: process.env.EMAIL,
         from: process.env.EMAIL,
-        subject: '[vzw-bot] ' + (result.status == 0 ?  'Success' : 'Error') ,
+        subject: '[vzw-bot] ' + (result.status === 0 ?  'Success' : 'Error') ,
         text: contents,
         html: contents.replace(/\n/g, '<br>'),
     };
@@ -64,7 +65,7 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
 
     mailer.sendMail(email, function(err, res) {
         if (err) {
-            console.error(err)
+            console.error(err);
         }
         console.log(res);
         process.exit(result.status);

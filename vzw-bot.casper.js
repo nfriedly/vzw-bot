@@ -8,6 +8,7 @@ var usageMsg = [
 ].join('\n');
 
 function handleTimeout() {
+    /*jshint validthis:true */
     this.capture('./screen.png');
     this.echo("Timeout reached, screenshot saved");
     this.exit(1);
@@ -24,7 +25,7 @@ var casper = require('casper').create({
             //this.echo(JSON.stringify(message)); // throws (?)
             this.echo(stack);
         } catch(ex) {
-            this.echo(ex.message, ex)
+            this.echo(ex.message, ex);
         }
         this.exit(1);
     },

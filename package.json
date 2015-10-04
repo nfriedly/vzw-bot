@@ -4,6 +4,7 @@
   "description": "Logs into my verizon and enters a sweepstakes for you",
   "main": "index.js",
   "scripts": {
+    "test": "jshint *.js",
     "start": "node index.js"
   },
   "repository": {
@@ -29,5 +30,8 @@
   },
   "engines": {
     "node": "^4.1.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0"
   }
 }
