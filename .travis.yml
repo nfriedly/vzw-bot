@@ -1,0 +1,7 @@
+deploy:
+  provider: heroku
+  api_key:
+    secure: NjYPWccEqTpnXXNtdGj1BHojBs2SzaSmbmxQTgAobDjIKvsPX7k/YEaCXkYwlZSvr5maPklPXLPhoKn86Ie7eezrEFfdNWesFhsG82/qy09RactkBjo+fdrM4B27e/n+yereLcBNDHtmLb8PTFL6u50w4qBLbTKa4uSCf+vqPadnVlvhFwoxmFZ/pS0i8xpMJyF07+tHAxOoHXB+crT7lLg99z3DunX9KmvitDA09B/TRQ3SiHqiPwV0sgI1noahIw6rpMoKtohiVkhnEQgduvcKbuXWKHRuo6tSNloB1VCj0kHCGyvGpChH801LSKDbvVj8On51t5lVnXKv/orL4jt9uLwmH50T7+4wbMiqteMiimKImwSqKH/mW6b3I+5SLNQMUBGcGdgCkRzMWtCBrIr5uYfPuXgjMhke+3lmoDATIgh4NEh4Iq7T0UAC+r9y4++mHQVEHZdDz/fk3abMZ9YZihUP+yGFwmxIOpPJQyIzxSTYrNm67NBOSH05theLjA+4jE1GVS+j2ouOjMQrDEryXuHfL2LRfS4x2uvDWxN4Fi8pdciPiCgenZfa0YxUROw3DGjv+sCSYhP8AxXe8NEYqkntDIl9+mIGtrX88b2bE+9t17Up62A2Q3kfs1HCCwjI1NK5XAOTjy8GI5n0bliDt7kbBInUX/rSMu+/nlc=
+  app: vzw-bot
+  on:
+    repo: nfriedly/vzw-bot
