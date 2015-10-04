@@ -24,7 +24,8 @@
     "dotenv": "^1.2.0",
     "nodemailer": "^1.5.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
-    "phantomjs": "^1.9.18"
+    "phantomjs": "^1.9.18",
+    "uncolor": "^0.3.0"
   },
   "engines": {
     "node": "^4.1.1"

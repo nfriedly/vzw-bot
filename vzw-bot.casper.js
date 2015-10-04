@@ -17,9 +17,15 @@ var casper = require('casper').create({
     //verbose: true,
     //logLevel: 'debug'
     onError: function(message, stack) {
-        this.capture('./screen.png');
-        this.echo("Error: " + message);
-        this.echo('Stack:\n  ' + stack.join('  \n'));
+        try {
+            this.capture('./screen.png');
+            this.echo("Error: ");
+            this.echo(message);
+            //this.echo(JSON.stringify(message)); // throws (?)
+            this.echo(stack);
+        } catch(ex) {
+            this.echo(ex.message, ex)
+        }
         this.exit(1);
     },
     onStepTimeout: handleTimeout,
@@ -53,22 +59,22 @@ casper.waitForSelector('#loginForm', function enterPassword() {
     this.click("#signIn");
 });
 
-casper.waitForUrl(/overview/, function accountHome() {
+casper.waitForSelector('a[title="Redeem Now"]', function accountHome() {
     this.echo("Going to rewards site");
     this.click('a[title="Redeem Now"]');
 });
 
-casper.then( function rewardsHome() {
+casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
     this.echo("Going to sweepstakes listing");
     this.click('#HL-R-CurrentSweepstakes');
 });
 
-casper.then( function findTablet() {
+casper.waitForText('Samsung Galaxy Tab S 10.5 - White', function findTablet() {
     this.echo("Going to Samsung sweepstakes");
     this.clickLabel('Samsung Galaxy Tab S 10.5 - White', 'a');
 });
 
-casper.then( function buyTickets() {
+casper.waitForSelector('#form_buytickets', function buyTickets() {
     this.echo("Buying tickets");
     this.fill('#form_buytickets', { ticketQty: 10, agreement: true }, true);
 });

@@ -23,6 +23,7 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
     console.log('Emailing results to %s', process.env.EMAIL);
 
     var fs = require('fs');
+    var uncolor = require('uncolor');
     var nodemailer = require('nodemailer');
     var sgTransport = require('nodemailer-sendgrid-transport');
 
@@ -38,6 +39,8 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
         '',
         'stderr:', result.stderr.toString()
     ].join('\n');
+
+    contents = uncolor(contents);
 
     var email = {
         to: process.env.EMAIL,
