@@ -11,23 +11,15 @@ function handleTimeout() {
     /*jshint validthis:true */
     this.capture('./screen.png');
     this.echo("Timeout reached, screenshot saved");
-    this.exit(1);
 }
 
 var casper = require('casper').create({
     //verbose: true,
     //logLevel: 'debug'
-    onError: function(message, stack) {
-        try {
-            this.capture('./screen.png');
-            this.echo("Error: ");
-            this.echo(message);
-            //this.echo(JSON.stringify(message)); // throws (?)
-            this.echo(stack);
-        } catch(ex) {
-            this.echo(ex.message, ex);
-        }
-        this.exit(1);
+    onError: function(casperInstance, errorMessage /*, engine*/) {
+        this.echo("Error: " + errorMessage);
+        this.echo("capturing screenshot");
+        this.capture('./screen.png');
     },
     onStepTimeout: handleTimeout,
     onTimeout: handleTimeout,
