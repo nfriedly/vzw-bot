@@ -32,9 +32,12 @@ var username = casper.cli.get("username");
 var password = casper.cli.get("password");
 var secret = casper.cli.get("secret");
 
+casper.start();
+casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/20100101 Firefox/40.0');
+
 // sometimes verizon goes back to the "enter your username" page right after you enter your username...?
 // maybe we should start at https://login.verizonwireless.com/amserver/UI/Login ... or the home page?
-casper.start('http://www.verizonwireless.com/', function login() {
+casper.thenOpen('http://www.verizonwireless.com/', function login() {
     this.echo('Logging in with username ' + username + '...');
     this.fill('#vgnSignInForm', { IDToken1: username }, false);
     this.click("#signInSubmitButton");
@@ -57,6 +60,7 @@ casper.waitForSelector('a[title="Redeem Now"]', function accountHome() {
     this.click('a[title="Redeem Now"]');
 });
 
+ /*
 casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
     this.echo("Going to sweepstakes listing");
     this.click('#HL-R-CurrentSweepstakes');
@@ -76,5 +80,21 @@ casper.waitForSelector('#ocBox', function done() {
     this.echo("Done!");
     this.capture('./screen.png');
 });
+*/
+
+casper.waitForSelector('#HL-Account', function goToAccount() {
+    this.click('#HL-Account');
+});
+
+casper.waitForSelector('#red5', function goToSweepstakesHistory() {
+    this.click('#red5');
+});
+
+casper.then(function() {
+    this.capture('./screen.png');
+    this.echo("Done!");
+});
+
+
 
 casper.run();
