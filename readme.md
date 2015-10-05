@@ -1,7 +1,18 @@
 Verizon "Smart Rewards" Bot
 ===============================
 
-Logs into your Verizon account and enters the Samsung tablet sweepstakes for you.
+Logs into your Verizon account and visits the smart rewards page. This:
+
+* Automatically grants you 300 points for logging in (once per billing cycle)
+* Automatically grants you a free entry for the current Samsung Tablet sweepstakes (once per day)
+
+It can optionally send out an email with the screenshots and logs always or just on errors.
+
+Finally, the app has (commented out) code to spend more points entering the tablet sweepstakes which can be easily 
+enabled and/or enhanced.
+
+Also check out my [analysis of what the points are worth in gift card auctions](https://gist.github.com/nfriedly/b80b569e2be2d2c86c18).
+
 
 Installation
 ------------
