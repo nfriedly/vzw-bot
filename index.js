@@ -53,6 +53,7 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
         subject: '[vzw-bot] ' + (result.status === 0 ?  'Success' : 'Error') ,
         text: contents,
         html: contents.replace(/\n/g, '<br>'),
+        attachments: []
     };
 
     fs.readdir('./', function(err, files) {
@@ -65,11 +66,11 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
             return path.extname(name) == '.png';
         }).forEach(function (name) {
             var cid = getRandomId() + '@screen.png';
-            email.attachments = [{
+            email.attachments.push({
                 filename: name,
                 content: fs.readFileSync('./' + name), // read the file into memory so that we can delete it right away
                 cid: cid
-            }];
+            });
             email.html += '<br><br>' + name + ':<br><img src="cid:' + cid + '"/>';
             fs.unlinkSync('./' + name); // delete the file so we don't accidentally send the same screenshot twice
         });
