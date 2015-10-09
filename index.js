@@ -30,6 +30,7 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
     var uncolor = require('uncolor');
     var nodemailer = require('nodemailer');
     var sgTransport = require('nodemailer-sendgrid-transport');
+    var path = require('path');
 
     var mailer = nodemailer.createTransport(sgTransport({
         auth: {
@@ -54,24 +55,32 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
         html: contents.replace(/\n/g, '<br>'),
     };
 
-    // todo: figure out how to catch errors in casper and then screenshot so that we get one of the error results too
-    if(fs.existsSync('./screen.png')) {
-        var cid = Date.now() + '@screen.png';
-        email.attachments = [{
-            filename: 'screen.png',
-            content: fs.readFileSync('./screen.png'), // read the file into memory so that we can delete it right away
-            cid: cid
-        }];
-        email.html += '<br><br><img src="cid:' + cid + '"/>';
-        fs.unlinkSync('./screen.png'); // delete the file so we don't accidentally send the same screenshot twice
-    }
+    fs.readdir('./', function(err, files) {
 
-    mailer.sendMail(email, function(err, res) {
-        if (err) {
-            console.error(err);
+        function getRandomId() {
+            return parseInt(Math.random().toString().slice(2), 10).toString(36);
         }
-        console.log(res);
-        process.exit(result.status);
+
+        files.filter(function (name) {
+            return path.extname(name) == '.png';
+        }).forEach(function (name) {
+            var cid = getRandomId() + '@screen.png';
+            email.attachments = [{
+                filename: name,
+                content: fs.readFileSync('./' + name), // read the file into memory so that we can delete it right away
+                cid: cid
+            }];
+            email.html += '<br><br>' + name + ':<br><img src="cid:' + cid + '"/>';
+            fs.unlinkSync('./' + name); // delete the file so we don't accidentally send the same screenshot twice
+        });
+
+        mailer.sendMail(email, function (err, res) {
+            if (err) {
+                console.error(err);
+            }
+            console.log(res);
+            process.exit(result.status);
+        });
     });
 } else {
     process.exit(result.status);
