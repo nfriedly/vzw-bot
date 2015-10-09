@@ -97,8 +97,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         //"$10 Ulta Beauty Gift Card - 300 Winner",
         "$5 BP Gift Card - 300 Winners",
         //"$10 Build-A-Bear Gift Card - 300 Winners",
-        "$10 GNC Gift Card - 300 Winners ",
-        "$15 Ritas Gift Card - 300 Winners" // there's one down around Indian Ripple Road, I think
+        //"$10 GNC Gift Card - 300 Winners ",
+        //"$15 Ritas Gift Card - 300 Winners" // there's one down around Indian Ripple Road, I think
     ];
 
     var avaliableSweepstakes = this.evaluate(function() {
