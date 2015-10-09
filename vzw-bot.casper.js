@@ -132,7 +132,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
         casper.waitForSelector('#ocBox', function done() {
             this.echo("Done!");
-            this.capture('./' + (sweepstakes.replace(/[^a-z0-9]+/ig, ' ').trim().replace(/ /g, '-')) + '.png');
+            //this.capture('./' + (sweepstakes.replace(/[^a-z0-9]+/ig, ' ').trim().replace(/ /g, '-')) + '.png');
         });
 
         casper.back();
