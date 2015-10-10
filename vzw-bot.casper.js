@@ -9,7 +9,7 @@ var usageMsg = [
 
 function handleTimeout() {
     /*jshint validthis:true */
-    this.capture('./screen.png');
+    this.capture('./timeout.png');
     this.echo("Timeout reached, screenshot saved");
 }
 
@@ -19,7 +19,7 @@ var casper = require('casper').create({
     onError: function (casperInstance, errorMessage /*, engine*/) {
         this.echo("Error: " + errorMessage);
         this.echo("capturing screenshot");
-        this.capture('./screen.png');
+        this.capture('./error.png');
     },
     onStepTimeout: handleTimeout,
     onTimeout: handleTimeout,
