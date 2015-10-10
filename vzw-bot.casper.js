@@ -58,7 +58,7 @@ casper.waitForSelector('#loginForm', function enterPassword() {
 casper.waitForSelector('div.o-usage-data-meter-text', function() {
     var cap = parseFloat(this.fetchText('div.o-usage-data-meter-text span').substr(3)); // parseFloat ignores trailing text :)
     var used = parseFloat(this.fetchText('div.o-meter-innerText'));
-    this.echo('Data: ' + used + '/' + cap + ' GB')
+    this.echo('Data: ' + used + '/' + cap + ' GB');
 });
 
 casper.waitForSelector('a[title="Redeem Now"]', function accountHome() {
@@ -116,7 +116,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         if (knownSweekstakes.indexOf(sweepstakes) == -1) {
             this.echo('New sweepstakes: ' + sweepstakes);
         }
-    });
+    }, this);
 
     sweepstakesToEnter.forEach(function(sweepstakes) {
 
@@ -142,7 +142,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         });
 
         casper.back();
-    });
+    }, this);
 
 
     casper.waitForSelector('#HL-Account', function goToAccount() {
