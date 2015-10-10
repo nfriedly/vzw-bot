@@ -8,6 +8,8 @@ Logs into your Verizon account and visits the smart rewards page. This:
 
 It can optionally send out an email with the screenshots and logs always or just on errors.
 
+The bot also reports your data usage, and a future version may be able to automatically manage your plan.
+
 Finally, the app goes through the current sweepstakes, reports any new ones, and then buys one ticket in each of the desired ones.
 
 Also check out my [analysis of what the points are worth in gift card auctions](https://gist.github.com/nfriedly/b80b569e2be2d2c86c18).

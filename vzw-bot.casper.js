@@ -55,6 +55,12 @@ casper.waitForSelector('#loginForm', function enterPassword() {
     this.click("#signIn");
 });
 
+casper.waitForSelector('div.o-usage-data-meter-text', function() {
+    var cap = parseFloat(this.fetchText('div.o-usage-data-meter-text span').substr(3)); // parseFloat ignores trailing text :)
+    var used = parseFloat(this.fetchText('div.o-meter-innerText'));
+    this.echo('Data: ' + used + '/' + cap + ' GB')
+});
+
 casper.waitForSelector('a[title="Redeem Now"]', function accountHome() {
     this.echo("Going to rewards site");
     this.click('a[title="Redeem Now"]');
