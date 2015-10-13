@@ -71,6 +71,29 @@ casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
     this.click('#HL-R-CurrentSweepstakes');
 });
 
+
+function enterSweepstakes(sweepstakes, numTickets) {
+
+    casper.wait((Math.random()*30+5)*1000); // wait a few seconds - todo: nix this for localdev
+
+    casper.waitForText(sweepstakes, function findTablet() {
+        this.echo("Entering " + sweepstakes + '...');
+        this.clickLabel(sweepstakes, 'a');
+    });
+
+    casper.waitForSelector('#form_buytickets', function buyTickets() {
+        this.fill('#form_buytickets', {ticketQty: numTickets, agreement: true}, true);
+    });
+
+    casper.waitForSelector('#ocBox', function done() {
+        this.echo("Entered!");
+        //this.capture('./' + (sweepstakes.replace(/[^a-z0-9]+/ig, ' ').trim().replace(/ /g, '-')) + '.png');
+    });
+
+    casper.back();
+}
+
+
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
 
     var knownSweekstakes = [
@@ -87,77 +110,69 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$5 BP Gift Card - 300 Winners",
         "$10 Build-A-Bear Gift Card - 300 Winners",
         "$10 GNC Gift Card - 300 Winners ",
-        "$15 Ritas Gift Card - 300 Winners"
+        "$15 Ritas Gift Card - 300 Winners",
+        "$5 Cabela's Gift Card - 300 Winners",
+        "$10 Bath & Body Works Gift Card - 300 Winners",
+        "$15 Chevron Gift Card - 300 Winners",
+        "$10 Dave and Buster's Gift Card - 300 Winners",
     ];
 
     var sweepstakesToEnter = [
+        // also entering the samsung one, but with 2 (extra) tickets per day instead of 10 once every two weeks
         "$10 Kohl's Gift Card - 300 Winners",
-        "Samsung Galaxy Tab S 10.5 - White",
-        //"$10 Chevron Gift Card - 300 Winners", // there are *no* chevrons around me - you have to go like 2 hours away
         "$10 Buffalo Wild Wings Gift Card - 300 Winners",
-        //"$10 Jiffy Lube Gift Card - 300 Winners",
         "$10 Walmart Gift Card - 300 Winners",
-        //"$10 Dunkin Donuts Gift Card - 300 Winners",
         "$10 Rite Aid Gift Card - 300 Winners",
         "$10 Bed Bath and Beyond Gift Card - 300 Winners",
-        //"$10 Ulta Beauty Gift Card - 300 Winner",
         "$5 BP Gift Card - 300 Winners",
-        //"$10 Build-A-Bear Gift Card - 300 Winners",
-        //"$10 GNC Gift Card - 300 Winners ",
-        //"$15 Ritas Gift Card - 300 Winners" // there's one down around Indian Ripple Road, I think
+        "$10 Bath & Body Works Gift Card - 300 Winners",
     ];
 
-    var avaliableSweepstakes = this.evaluate(function() {
+    var availableSweepstakes = this.evaluate(function () {
         /*globals $*/
-        return $('div.price-matrix h1 a').map(function() {return this.textContent;}).toArray();
+        return $('div.price-matrix h1 a').map(function () {
+            return this.textContent;
+        }).toArray();
     });
 
-    avaliableSweepstakes.forEach(function(sweepstakes) {
+    availableSweepstakes.forEach(function (sweepstakes) {
         if (knownSweekstakes.indexOf(sweepstakes) == -1) {
             this.echo('New sweepstakes: ' + sweepstakes);
         }
     }, this);
 
-    sweepstakesToEnter.forEach(function(sweepstakes) {
+    enterSweepstakes("Samsung Galaxy Tab S 10.5 - White", 2);
 
-        if (avaliableSweepstakes.indexOf(sweepstakes) == -1) {
-            this.echo('Sweepstakes "' + sweepstakes + '" not found, skipping');
-            this.capture('./all-sweepstakes.png');
-            return;
-        }
+    if (new Date().getDate() % 14 === 0) { // once every two weeks (because all except the samsung tablet one last two weeks)
+        sweepstakesToEnter.forEach(function (sweepstakes) {
 
-        casper.waitForText(sweepstakes, function findTablet() {
-            this.echo("Going to sweepstakes " + sweepstakes);
-            this.clickLabel(sweepstakes, 'a');
-        });
+            if (availableSweepstakes.indexOf(sweepstakes) == -1) {
+                this.echo('Sweepstakes "' + sweepstakes + '" not currently active, skipping');
+                //this.capture('./all-sweepstakes.png');
+                return;
+            }
 
-        casper.waitForSelector('#form_buytickets', function buyTickets() {
-            this.echo("Buying ticket");
-            this.fill('#form_buytickets', { ticketQty: 1, agreement: true }, true);
-        });
+            enterSweepstakes(sweepstakes, 10);
 
-        casper.waitForSelector('#ocBox', function done() {
-            this.echo("Done!");
-            //this.capture('./' + (sweepstakes.replace(/[^a-z0-9]+/ig, ' ').trim().replace(/ /g, '-')) + '.png');
-        });
-
-        casper.back();
-    }, this);
-
-
-    casper.waitForSelector('#HL-Account', function goToAccount() {
-        this.click('#HL-Account');
-    });
-
-    casper.waitForSelector('#red5', function goToSweepstakesHistory() {
-        this.click('#red5');
-    });
-
-    casper.then(function () {
-        this.capture('./history.png');
-        this.echo("Done!");
-    });
+        }, this);
+    }
 
 });
+
+
+
+casper.waitForSelector('#HL-Account', function goToAccount() {
+    this.click('#HL-Account');
+});
+
+casper.waitForSelector('#red5', function goToSweepstakesHistory() {
+    this.click('#red5');
+});
+
+casper.then(function () {
+    this.capture('./history.png');
+    this.echo("Done!");
+});
+
 
 casper.run();
