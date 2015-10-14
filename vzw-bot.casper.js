@@ -115,6 +115,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$10 Bath & Body Works Gift Card - 300 Winners",
         "$15 Chevron Gift Card - 300 Winners",
         "$10 Dave and Buster's Gift Card - 300 Winners",
+        "$10 Papa John's Gift Card - 300 Winners",
     ];
 
     var sweepstakesToEnter = [
@@ -126,6 +127,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$10 Bed Bath and Beyond Gift Card - 300 Winners",
         "$5 BP Gift Card - 300 Winners",
         "$10 Bath & Body Works Gift Card - 300 Winners",
+        "$10 Papa John's Gift Card - 300 Winners",
     ];
 
     var availableSweepstakes = this.evaluate(function () {
@@ -147,7 +149,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         sweepstakesToEnter.forEach(function (sweepstakes) {
 
             if (availableSweepstakes.indexOf(sweepstakes) == -1) {
-                this.echo('Sweepstakes "' + sweepstakes + '" not currently active, skipping');
+                this.echo('Skipping ' + sweepstakes);
                 //this.capture('./all-sweepstakes.png');
                 return;
             }
