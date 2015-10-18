@@ -74,10 +74,13 @@ casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
 
 function enterSweepstakes(sweepstakes, numTickets) {
 
+    casper.then(function() {
+        this.echo("Entering " + sweepstakes + '...');
+    });
+
     casper.wait((Math.random()*30+5)*1000); // wait a few seconds - todo: nix this for localdev
 
     casper.waitForText(sweepstakes, function findTablet() {
-        this.echo("Entering " + sweepstakes + '...');
         this.clickLabel(sweepstakes, 'a');
     });
 
@@ -116,6 +119,9 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$15 Chevron Gift Card - 300 Winners",
         "$10 Dave and Buster's Gift Card - 300 Winners",
         "$10 Papa John's Gift Card - 300 Winners",
+        "$15 Ben and Jerry's Gift Card - 300 Winners",
+        "$10 Cracker Barrel Gift Card - 300 Winners",
+        "$10 Sally's Gift Card - 300 Winners",
     ];
 
     var sweepstakesToEnter = [
@@ -128,6 +134,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$5 BP Gift Card - 300 Winners",
         "$10 Bath & Body Works Gift Card - 300 Winners",
         "$10 Papa John's Gift Card - 300 Winners",
+        "$10 Cracker Barrel Gift Card - 300 Winners",
     ];
 
     var availableSweepstakes = this.evaluate(function () {
