@@ -52,6 +52,10 @@ casper.waitForSelector('#challengequestion', function securityQuestion() {
 casper.waitForSelector('#loginForm', function enterPassword() {
     this.echo("Entering password...");
     this.fill('#loginForm', {IDToken2: password}, false);
+    //this.click("#signIn");
+});
+
+casper.waitForSelector('#signIn', function enterPassword() {
     this.click("#signIn");
 });
 
