@@ -46,17 +46,13 @@ casper.thenOpen('http://www.verizonwireless.com/', function login() {
 casper.waitForSelector('#challengequestion', function securityQuestion() {
     this.echo("Answering security question...");
     this.fill('#challengequestion', {IDToken1: secret}, false);
-    this.click('#signIn');
+    this.click('button[type="submit"].o-red-button');
 });
 
 casper.waitForSelector('#loginForm', function enterPassword() {
     this.echo("Entering password...");
     this.fill('#loginForm', {IDToken2: password}, false);
-    //this.click("#signIn");
-});
-
-casper.waitForSelector('#signIn', function enterPassword() {
-    this.click("#signIn");
+    this.click('button[type="submit"].o-red-button');
 });
 
 casper.waitForSelector('div.o-usage-data-meter-text', function() {
@@ -126,6 +122,10 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$15 Ben and Jerry's Gift Card - 300 Winners",
         "$10 Cracker Barrel Gift Card - 300 Winners",
         "$10 Sally's Gift Card - 300 Winners",
+        "$25 Verizon Gift Card - 300 Winners",
+        "$10 Starbucks Gift Card - 300 Winners",
+        "$10 Amazon Gift Card - 300 Winners",
+        "$10 Gap Gift Card - 300 Winners",1
     ];
 
     var sweepstakesToEnter = [
@@ -139,6 +139,9 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$10 Bath & Body Works Gift Card - 300 Winners",
         "$10 Papa John's Gift Card - 300 Winners",
         "$10 Cracker Barrel Gift Card - 300 Winners",
+        "$25 Verizon Gift Card - 300 Winners",
+        "$10 Amazon Gift Card - 300 Winners",
+        "$10 Gap Gift Card - 300 Winners",
     ];
 
     var availableSweepstakes = this.evaluate(function () {
@@ -154,14 +157,13 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         }
     }, this);
 
-    enterSweepstakes("Samsung Galaxy Tab S 10.5 - White", 2);
+    enterSweepstakes("Samsung Galaxy Tab S 10.5 - White", 4);
 
-    if (new Date().getDate() % 14 === 0) { // once every two weeks (because all except the samsung tablet one last two weeks)
+    if (new Date().getDay() === 0) { // if today is Sunday (because all except the Samsung tablet one last two weeks, but weekly is easier than bi-weekly)
         sweepstakesToEnter.forEach(function (sweepstakes) {
 
             if (availableSweepstakes.indexOf(sweepstakes) == -1) {
                 this.echo('Skipping ' + sweepstakes);
-                //this.capture('./all-sweepstakes.png');
                 return;
             }
 
@@ -183,6 +185,7 @@ casper.waitForSelector('#red5', function goToSweepstakesHistory() {
 });
 
 casper.then(function () {
+    // todo: grab some text here and skip the screenshot
     this.capture('./history.png');
     this.echo("Done!");
 });
