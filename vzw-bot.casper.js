@@ -100,34 +100,50 @@ function enterSweepstakes(sweepstakes, numTickets) {
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
 
     var knownSweekstakes = [
-        "$10 Kohl's Gift Card - 300 Winners",
-        "Samsung Galaxy Tab S 10.5 - White",
-        "$10 Chevron Gift Card - 300 Winners",
-        "$10 Buffalo Wild Wings Gift Card - 300 Winners",
-        "$10 Jiffy Lube Gift Card - 300 Winners",
-        "$10 Walmart Gift Card - 300 Winners",
-        "$10 Dunkin Donuts Gift Card - 300 Winners",
-        "$10 Rite Aid Gift Card - 300 Winners",
-        "$10 Bed Bath and Beyond Gift Card - 300 Winners",
-        "$10 Ulta Beauty Gift Card - 300 Winner",
-        "$5 BP Gift Card - 300 Winners",
-        "$10 Build-A-Bear Gift Card - 300 Winners",
-        "$10 GNC Gift Card - 300 Winners ",
-        "$15 Ritas Gift Card - 300 Winners",
-        "$5 Cabela's Gift Card - 300 Winners",
-        "$10 Bath & Body Works Gift Card - 300 Winners",
-        "$15 Chevron Gift Card - 300 Winners",
-        "$10 Dave and Buster's Gift Card - 300 Winners",
-        "$10 Papa John's Gift Card - 300 Winners",
-        "$15 Ben and Jerry's Gift Card - 300 Winners",
-        "$10 Cracker Barrel Gift Card - 300 Winners",
-        "$10 Sally's Gift Card - 300 Winners",
-        "$25 Verizon Gift Card - 300 Winners",
-        "$10 Starbucks Gift Card - 300 Winners",
+        "$10 AMC Gift Card - 300 Winners",
         "$10 Amazon Gift Card - 300 Winners",
-        "$10 Gap Gift Card - 300 Winners",1
+        "$10 Arby's Gift Card - 300 Winners",
+        "$10 Barnes and Noble Gift Card - 300 Winners",
+        "$10 Bath & Body Works Gift Card - 300 Winners",
+        "$10 Bed Bath and Beyond Gift Card - 300 Winners",
+        "$10 Best Buy Gift Card - 300 Winners",
+        "$10 Buffalo Wild Wings Gift Card - 300 Winners",
+        "$10 Build-A-Bear Gift Card - 300 Winners",
+        "$10 Chevron Gift Card - 300 Winners",
+        "$10 Cracker Barrel Gift Card - 300 Winners",
+        "$10 Dave and Buster's Gift Card - 300 Winners",
+        "$10 Dunkin Donuts Gift Card - 300 Winners",
+        "$10 Footlocker Gift Card 300 Winners",
+        "$10 GNC Gift Card - 300 Winners",
+        "$10 Game Stop Gift Card - 300 Winners",
+        "$10 Gap Gift Card - 300 Winners",
+        "$10 Home Depot Gift Card - 300 Winners",
+        "$10 Jiffy Lube Gift Card - 300 Winners",
+        "$10 Kohl's Gift Card - 300 Winners",
+        "$10 Mobile Gift Card - 300 Winners",
+        "$10 Papa John's Gift Card - 300 Winners",
+        "$10 Rite Aid Gift Card - 300 Winners",
+        "$10 Sally's Gift Card - 300 Winners",
+        "$10 Starbucks Gift Card - 300 Winners",
+        "$10 Ulta Beauty Gift Card - 300 Winner",
+        "$10 Walmart Gift Card - 300 Winners",
+        "$10 Whole Foods Gift Card - 300 Winners",
+        "$15 Ben and Jerry's Gift Card - 300 Winners",
+        "$15 Chevron Gift Card - 300 Winners",
+        "$15 Itunes Gift Card - 300 Winners",
+        "$15 Ritas Gift Card - 300 Winners",
+        "$25 Verizon Gift Card - 300 Winners",
+        "$5 AutoZone Gift Card - 300 Winners",
+        "$5 BP Gift Card - 300 Winners",
+        "$5 Cabela's Gift Card - 300 Winners",
+        "Family Fall Favorites",
+        "Samsung Galaxy Tab S 10.5 - White",
+        "Samsung Galaxy Tab S 10.5 White",
+        "Samsung Galaxy Tab? S 10.5 - White",
+        "Thomas Rhett Autographed Guitar",
     ];
 
+    // todo: allow a specified number of entries per sweeps, and then check each one to ensure the number is met or exceeded
     var sweepstakesToEnter = [
         // also entering the samsung one, but with 2 (extra) tickets per day instead of 10 once every two weeks
         "$10 Kohl's Gift Card - 300 Winners",
@@ -185,9 +201,18 @@ casper.waitForSelector('#red5', function goToSweepstakesHistory() {
 });
 
 casper.then(function () {
-    // todo: grab some text here and skip the screenshot
-    this.capture('./history.png');
-    this.echo("Done!");
+    var entries = this.evaluate(function() {
+        /*globals $*/
+        return $('div.panel:has(h1:contains(Current Sweepstakes)) a.title')
+            .map(function(){ return this.textContent; })
+            .toArray();
+    });
+    if (!entries || !entries.length) {
+        this.capture('history.png');
+    } else {
+        this.echo("Current Entries:");
+        entries.forEach(function(entry){this.echo(" - " + entry);}, this);
+    }
 });
 
 
