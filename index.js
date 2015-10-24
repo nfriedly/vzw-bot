@@ -40,9 +40,8 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
     }));
 
     var contents = [
-        'stdout:', result.stdout.toString(),
-        '',
-        'stderr:', result.stderr.toString()
+        result.stdout.toString(),
+        result.stderr.toString()
     ].join('\n');
 
     contents = uncolor(contents);
