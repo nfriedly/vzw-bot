@@ -127,6 +127,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         "$10 Starbucks Gift Card - 300 Winners",
         "$10 Ulta Beauty Gift Card - 300 Winner",
         "$10 Walmart Gift Card - 300 Winners",
+        "$10 Walmart Gift Card 300 Winners",
         "$10 Whole Foods Gift Card - 300 Winners",
         "$15 Ben and Jerry's Gift Card - 300 Winners",
         "$15 Chevron Gift Card - 300 Winners",
@@ -144,11 +145,13 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
     ];
 
     // todo: allow a specified number of entries per sweeps, and then check each one to ensure the number is met or exceeded
+    // also, allow for partial matches
     var sweepstakesToEnter = [
         // also entering the samsung one, but with 2 (extra) tickets per day instead of 10 once every two weeks
         "$10 Kohl's Gift Card - 300 Winners",
         "$10 Buffalo Wild Wings Gift Card - 300 Winners",
         "$10 Walmart Gift Card - 300 Winners",
+        "$10 Walmart Gift Card 300 Winners",
         "$10 Rite Aid Gift Card - 300 Winners",
         "$10 Bed Bath and Beyond Gift Card - 300 Winners",
         "$5 BP Gift Card - 300 Winners",
