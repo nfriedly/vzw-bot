@@ -66,9 +66,35 @@ casper.waitForSelector('a[title="Redeem Now"]', function accountHome() {
     this.click('a[title="Redeem Now"]');
 });
 
+// see if there is currently a popup message open, and if so, it says that I won
+function checkForWin(){
+    if (casper.exists('#messagePopupHeader h6') && casper.fetchText('#messagePopupHeader h6') == 'Congratulations!') {
+        casper.echo('Win!');
+        casper.echo(casper.fetchText('#messageContent'));
+        // casper.click('a.claimnow');
+        // todo: record the next claim process (first time requires some one-time setup like address and such)
+    }
+}
+
+// see if there's a "next message" button available and if so click it, check for a win, repeat
+function checkNext() {
+    if (casper.exists('a.msg-btn-next')) {
+        casper.click('a.msg-btn-next');
+        casper.waitForSelectorTextChange('#messageContent', function() {
+            checkForWin();
+            checkNext();
+        });
+    }
+}
+
 casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
-    this.echo("Going to sweepstakes listing");
-    this.click('#HL-R-CurrentSweepstakes');
+    checkForWin();
+    checkNext();
+
+    this.then(function() {
+        this.echo("Going to sweepstakes listing");
+        this.click('#HL-R-CurrentSweepstakes');
+    });
 });
 
 
@@ -100,74 +126,59 @@ function enterSweepstakes(details) {
 
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
 
+
+    var isSunday = (new Date().getDay() === 0);
     var knownSweekstakes = [
-        "AMC",
-        "Amazon",
-        "Arby's",
-        "Barnes and Noble",
-        "Bath & Body Works",
-        "Bed Bath and Beyond",
-        "Ben and Jerrys",
-        "Best Buy",
-        "Buffalo Wild Wings",
-        "Build-A-Bear",
-        "Chevron",
-        "Cracker Barrel",
-        "Dave and Buster's",
-        "Dunkin Donuts",
-        "Footlocker",
-        "GNC",
-        "Game Stop",
-        "Gap",
-        "Home Depot",
-        "Jiffy Lube",
-        "Kohl's",
-        "Mobil",
-        "Papa John's",
-        "Rite Aid",
-        "Sally's",
-        "Starbucks",
-        "Ulta Beauty",
-        "Walmart",
-        "Whole Foods",
-        "Ben and Jerry's",
-        "Chevron",
-        "Itunes",
-        "Ritas",
-        "Verizon",
-        "AutoZone",
-        "BP",
-        "Cabela's",
-        "Family Fall Favorites",
-        "Samsung Galaxy Tab",
-        "Thomas Rhett Autographed Guitar",
-    ];
+        // food (ish)
+        {name: "Arby's"},
+        {name: "Ben and Jerry"}, // sometimes Jerry's other times Jerrys - this matches both
+        {name: "Buffalo Wild Wings", scheduled: isSunday, numTickets: 5},
+        {name: "Cabela's"},
+        {name: "Cracker Barrel", scheduled: isSunday, numTickets: 5},
+        {name: "Dave and Buster's"},
+        {name: "Dunkin Donuts"},
+        {name: "GNC"},
+        {name: "Papa John's", scheduled: isSunday, numTickets: 5},
+        {name: "Ritas"},
+        {name: "Starbucks"},
 
-    // todo: allow a specified number of entries per sweeps, and then check each one to ensure the number is met or exceeded
-
-    var isSunday = new Date().getDay() === 0;
-    var interestedSweepstakes = [
-        // for us
-        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 4}, // this one resets daily while the others typically last 2 weeks (but weekly is much easier to target)
-        {name: "Verizon", scheduled: isSunday, numTickets: 50},
+        // shopping & misc.
+        {name: "AMC"},
         {name: "Amazon", scheduled: isSunday, numTickets: 50},
-        {name: "Walmart", scheduled: isSunday, numTickets: 20},
-        {name: "Itunes", scheduled: isSunday, numTickets: 20},
-        {name: "Kohl's", scheduled: isSunday, numTickets: 10},
-        {name: "BP", scheduled: isSunday, numTickets: 10},
+        {name: "Barnes and Noble", scheduled: isSunday, numTickets: 5},
+        {name: "AutoZone"},
+        {name: "Bed Bath and Beyond", scheduled: isSunday, numTickets: 5},
+        {name: "Bath & Body Works", scheduled: isSunday, numTickets: 5},
+        {name: "Best Buy"},
+        {name: "Build-A-Bear"},
+        {name: "Footlocker", scheduled: isSunday, numTickets: 5},
         {name: "Game Stop", scheduled: isSunday, numTickets: 10},
         {name: "Gap", scheduled: isSunday, numTickets: 10},
         {name: "Home Depot", scheduled: isSunday, numTickets: 10},
+        {name: "Itunes", scheduled: isSunday, numTickets: 20},
+        {name: "Jiffy Lube"},
+        {name: "Kohl's", scheduled: isSunday, numTickets: 10},
         {name: "Rite Aid", scheduled: isSunday, numTickets: 5},
-        {name: "Bed Bath and Beyond", scheduled: isSunday, numTickets: 5},
-        {name: "Bath & Body Works", scheduled: isSunday, numTickets: 5},
-        {name: "Footlocker", scheduled: isSunday, numTickets: 5},
+        {name: "Sally's"},
+        {name: "Ulta Beauty"},
 
-        // to give away
-        {name: "Cracker Barrel", scheduled: isSunday, numTickets: 5},
-        {name: "Barnes and Noble", scheduled: isSunday, numTickets: 5},
-        {name: "Papa John's", scheduled: isSunday, numTickets: 5},
+        // gas
+        {name: "BP", scheduled: isSunday, numTickets: 10},
+        {name: "Chevron"},
+        {name: "Mobil"},
+        {name: "Verizon", scheduled: isSunday, numTickets: 50},
+        {name: "Walmart", scheduled: isSunday, numTickets: 20},
+        {name: "Whole Foods", scheduled: isSunday, numTickets: 10},
+
+        // daily sweeps
+        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 4}, // this one resets daily
+
+        // special one-off things that probably don't even get picked up by the code below
+        {name: "Cyber Shop til You Drop"},
+        {name: "Family Fall Favorites"},
+        {name: "Thomas Rhett Autographed Guitar"},
     ];
+
     var sweepstakesToEnterToday = [];
 
     var availableSweepstakes = this.evaluate(function () {
@@ -177,15 +188,11 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         }).toArray();
     });
 
-    var reKnown = new RegExp(knownSweekstakes.join('|'));
-    var reEnter = new RegExp(interestedSweepstakes.map(function(d) {return d.name;}).join('|'));
+    var reKnown = new RegExp(knownSweekstakes.map(function(d) {return d.name;}).join('|'));
     availableSweepstakes.forEach(function (sweepstakes) {
-        if (!reKnown.test(sweepstakes)) {
-            this.echo('New sweepstakes: ' + sweepstakes);
-        }
-        var match = sweepstakes.match(reEnter);
+        var match = sweepstakes.match(reKnown);
         if (match) {
-            interestedSweepstakes.some(function(details) {
+            knownSweekstakes.some(function(details) {
                 if (details.name == match[0]) {
                     if (details.scheduled) {
                         sweepstakesToEnterToday.push({
@@ -196,7 +203,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
                     return true; // stop the .some loop, we found the one we were looking for (even if it isn't scheduled for today)
                 }
             });
-
+        } else {
+            this.echo('New sweepstakes: ' + sweepstakes);
         }
     }, this);
 
