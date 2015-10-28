@@ -72,7 +72,8 @@ casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
 });
 
 
-function enterSweepstakes(sweepstakes, numTickets) {
+function enterSweepstakes(details) {
+    var sweepstakes = details.name, numTickets = details.numTickets;
 
     casper.then(function() {
         this.echo("Entering " + sweepstakes + '...');
@@ -100,68 +101,74 @@ function enterSweepstakes(sweepstakes, numTickets) {
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
 
     var knownSweekstakes = [
-        "$10 AMC Gift Card - 300 Winners",
-        "$10 Amazon Gift Card - 300 Winners",
-        "$10 Arby's Gift Card - 300 Winners",
-        "$10 Barnes and Noble Gift Card - 300 Winners",
-        "$10 Bath & Body Works Gift Card - 300 Winners",
-        "$10 Bed Bath and Beyond Gift Card - 300 Winners",
-        "$10 Best Buy Gift Card - 300 Winners",
-        "$10 Buffalo Wild Wings Gift Card - 300 Winners",
-        "$10 Build-A-Bear Gift Card - 300 Winners",
-        "$10 Chevron Gift Card - 300 Winners",
-        "$10 Cracker Barrel Gift Card - 300 Winners",
-        "$10 Dave and Buster's Gift Card - 300 Winners",
-        "$10 Dunkin Donuts Gift Card - 300 Winners",
-        "$10 Footlocker Gift Card 300 Winners",
-        "$10 GNC Gift Card - 300 Winners",
-        "$10 Game Stop Gift Card - 300 Winners",
-        "$10 Gap Gift Card - 300 Winners",
-        "$10 Home Depot Gift Card - 300 Winners",
-        "$10 Jiffy Lube Gift Card - 300 Winners",
-        "$10 Kohl's Gift Card - 300 Winners",
-        "$10 Mobile Gift Card - 300 Winners",
-        "$10 Papa John's Gift Card - 300 Winners",
-        "$10 Rite Aid Gift Card - 300 Winners",
-        "$10 Sally's Gift Card - 300 Winners",
-        "$10 Starbucks Gift Card - 300 Winners",
-        "$10 Ulta Beauty Gift Card - 300 Winner",
-        "$10 Walmart Gift Card - 300 Winners",
-        "$10 Walmart Gift Card 300 Winners",
-        "$10 Whole Foods Gift Card - 300 Winners",
-        "$15 Ben and Jerry's Gift Card - 300 Winners",
-        "$15 Chevron Gift Card - 300 Winners",
-        "$15 Itunes Gift Card - 300 Winners",
-        "$15 Ritas Gift Card - 300 Winners",
-        "$25 Verizon Gift Card - 300 Winners",
-        "$5 AutoZone Gift Card - 300 Winners",
-        "$5 BP Gift Card - 300 Winners",
-        "$5 Cabela's Gift Card - 300 Winners",
+        "AMC",
+        "Amazon",
+        "Arby's",
+        "Barnes and Noble",
+        "Bath & Body Works",
+        "Bed Bath and Beyond",
+        "Ben and Jerrys",
+        "Best Buy",
+        "Buffalo Wild Wings",
+        "Build-A-Bear",
+        "Chevron",
+        "Cracker Barrel",
+        "Dave and Buster's",
+        "Dunkin Donuts",
+        "Footlocker",
+        "GNC",
+        "Game Stop",
+        "Gap",
+        "Home Depot",
+        "Jiffy Lube",
+        "Kohl's",
+        "Mobil",
+        "Papa John's",
+        "Rite Aid",
+        "Sally's",
+        "Starbucks",
+        "Ulta Beauty",
+        "Walmart",
+        "Whole Foods",
+        "Ben and Jerry's",
+        "Chevron",
+        "Itunes",
+        "Ritas",
+        "Verizon",
+        "AutoZone",
+        "BP",
+        "Cabela's",
         "Family Fall Favorites",
-        "Samsung Galaxy Tab S 10.5 - White",
-        "Samsung Galaxy Tab S 10.5 White",
-        "Samsung Galaxy Tab? S 10.5 - White",
+        "Samsung Galaxy Tab",
         "Thomas Rhett Autographed Guitar",
     ];
 
     // todo: allow a specified number of entries per sweeps, and then check each one to ensure the number is met or exceeded
-    // also, allow for partial matches
-    var sweepstakesToEnter = [
-        // also entering the samsung one, but with 2 (extra) tickets per day instead of 10 once every two weeks
-        "$10 Kohl's Gift Card - 300 Winners",
-        "$10 Buffalo Wild Wings Gift Card - 300 Winners",
-        "$10 Walmart Gift Card - 300 Winners",
-        "$10 Walmart Gift Card 300 Winners",
-        "$10 Rite Aid Gift Card - 300 Winners",
-        "$10 Bed Bath and Beyond Gift Card - 300 Winners",
-        "$5 BP Gift Card - 300 Winners",
-        "$10 Bath & Body Works Gift Card - 300 Winners",
-        "$10 Papa John's Gift Card - 300 Winners",
-        "$10 Cracker Barrel Gift Card - 300 Winners",
-        "$25 Verizon Gift Card - 300 Winners",
-        "$10 Amazon Gift Card - 300 Winners",
-        "$10 Gap Gift Card - 300 Winners",
+
+    var isSunday = new Date().getDay() === 0;
+    var interestedSweepstakes = [
+        // for us
+        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 4}, // this one resets daily while the others typically last 2 weeks (but weekly is much easier to target)
+        {name: "Verizon", scheduled: isSunday, numTickets: 50},
+        {name: "Amazon", scheduled: isSunday, numTickets: 50},
+        {name: "Walmart", scheduled: isSunday, numTickets: 20},
+        {name: "Itunes", scheduled: isSunday, numTickets: 20},
+        {name: "Kohl's", scheduled: isSunday, numTickets: 10},
+        {name: "BP", scheduled: isSunday, numTickets: 10},
+        {name: "Game Stop", scheduled: isSunday, numTickets: 10},
+        {name: "Gap", scheduled: isSunday, numTickets: 10},
+        {name: "Home Depot", scheduled: isSunday, numTickets: 10},
+        {name: "Rite Aid", scheduled: isSunday, numTickets: 5},
+        {name: "Bed Bath and Beyond", scheduled: isSunday, numTickets: 5},
+        {name: "Bath & Body Works", scheduled: isSunday, numTickets: 5},
+        {name: "Footlocker", scheduled: isSunday, numTickets: 5},
+
+        // to give away
+        {name: "Cracker Barrel", scheduled: isSunday, numTickets: 5},
+        {name: "Barnes and Noble", scheduled: isSunday, numTickets: 5},
+        {name: "Papa John's", scheduled: isSunday, numTickets: 5},
     ];
+    var sweepstakesToEnterToday = [];
 
     var availableSweepstakes = this.evaluate(function () {
         /*globals $*/
@@ -170,26 +177,30 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         }).toArray();
     });
 
+    var reKnown = new RegExp(knownSweekstakes.join('|'));
+    var reEnter = new RegExp(interestedSweepstakes.map(function(d) {return d.name;}).join('|'));
     availableSweepstakes.forEach(function (sweepstakes) {
-        if (knownSweekstakes.indexOf(sweepstakes) == -1) {
+        if (!reKnown.test(sweepstakes)) {
             this.echo('New sweepstakes: ' + sweepstakes);
+        }
+        var match = sweepstakes.match(reEnter);
+        if (match) {
+            interestedSweepstakes.some(function(details) {
+                if (details.name == match[0]) {
+                    if (details.scheduled) {
+                        sweepstakesToEnterToday.push({
+                            name: sweepstakes, // get the full text that's on the link rather than the short name in the code
+                            numTickets: details.numTickets
+                        });
+                    }
+                    return true; // stop the .some loop, we found the one we were looking for (even if it isn't scheduled for today)
+                }
+            });
+
         }
     }, this);
 
-    enterSweepstakes("Samsung Galaxy Tab S 10.5 - White", 4);
-
-    if (new Date().getDay() === 0) { // if today is Sunday (because all except the Samsung tablet one last two weeks, but weekly is easier than bi-weekly)
-        sweepstakesToEnter.forEach(function (sweepstakes) {
-
-            if (availableSweepstakes.indexOf(sweepstakes) == -1) {
-                this.echo('Skipping ' + sweepstakes);
-                return;
-            }
-
-            enterSweepstakes(sweepstakes, 10);
-
-        }, this);
-    }
+    sweepstakesToEnterToday.forEach(enterSweepstakes);
 
 });
 
