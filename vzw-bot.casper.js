@@ -155,7 +155,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Game Stop", scheduled: isSunday, numTickets: 10},
         {name: "Gap", scheduled: isSunday, numTickets: 10},
         {name: "Home Depot", scheduled: isSunday, numTickets: 10},
-        {name: "Itunes", scheduled: isSunday, numTickets: 20},
+        {name: "iTunes", scheduled: isSunday, numTickets: 20}, // also written "Itunes" once
         {name: "Jiffy Lube"},
         {name: "Kohl's", scheduled: isSunday, numTickets: 10},
         {name: "Rite Aid", scheduled: isSunday, numTickets: 5},
