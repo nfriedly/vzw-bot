@@ -141,6 +141,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Papa John's", scheduled: isSunday, numTickets: 5},
         {name: "Ritas"},
         {name: "Starbucks"},
+        {name: "Boston Market"},
 
         // shopping & misc.
         {name: "AMC"},
@@ -161,6 +162,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Rite Aid", scheduled: isSunday, numTickets: 5},
         {name: "Sally's"},
         {name: "Ulta Beauty"},
+        {name: "Earrings"},
 
         // gas
         {name: "BP", scheduled: isSunday, numTickets: 10},
@@ -172,6 +174,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
         // daily sweeps
         {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 4}, // this one resets daily
+        {name: "LG Urbane", scheduled: true, numTickets: 4},
 
         // special one-off things that probably don't even get picked up by the code below
         {name: "Cyber Shop til You Drop"},
