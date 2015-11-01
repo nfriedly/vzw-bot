@@ -1,6 +1,8 @@
 Verizon "Smart Rewards" Bot
 ===============================
 
+[![Build Status](https://travis-ci.org/nfriedly/vzw-bot.svg?branch=master)](https://travis-ci.org/nfriedly/vzw-bot)
+
 Logs into your Verizon account and visits the smart rewards page. This:
 
 * Automatically grants you 300 points for logging in (once per billing cycle)
