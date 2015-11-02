@@ -49,7 +49,7 @@ if ( (result.status || process.env.EMAIL_ON_SUCCESS == 'true') && process.env.EM
     var email = {
         to: process.env.EMAIL,
         from: process.env.EMAIL,
-        subject: '[vzw-bot] ' + (result.status === 0 ?  'Success' : 'Error') ,
+        subject: '[vzw-bot] ' + (contents.indexOf('[win]') > 0 ? '[win] ' : '') + (result.status === 0 ?  'Success' : 'Error') ,
         text: contents,
         html: contents.replace(/\n/g, '<br>'),
         attachments: []

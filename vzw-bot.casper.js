@@ -69,8 +69,7 @@ casper.waitForSelector('a[title="Redeem Now"]', function accountHome() {
 // see if there is currently a popup message open, and if so, it says that I won
 function checkForWin(){
     if (casper.exists('#messagePopupHeader h6') && casper.fetchText('#messagePopupHeader h6') == 'Congratulations!') {
-        casper.echo('Win!');
-        casper.echo(casper.fetchText('#messageContent'));
+        casper.echo('[win] ' + casper.fetchText('#messageContent'));
         // casper.click('a.claimnow');
         // todo: record the next claim process (first time requires some one-time setup like address and such)
     }
