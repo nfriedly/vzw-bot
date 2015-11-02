@@ -125,7 +125,7 @@ function enterSweepstakes(details) {
 
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
 
-
+    // todo: grab the history first and then go through each current sweepstakes to ensure that at least numTickets have been purchased
     var isSunday = (new Date().getDay() === 0);
     var knownSweekstakes = [
         // food (ish)
@@ -162,6 +162,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Sally's"},
         {name: "Ulta Beauty"},
         {name: "Earrings"},
+        {name: "CVS", scheduled: isSunday, numTickets: 10},
 
         // gas
         {name: "BP", scheduled: isSunday, numTickets: 10},
@@ -172,7 +173,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Whole Foods", scheduled: isSunday, numTickets: 10},
 
         // daily sweeps
-        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 4}, // this one resets daily
+        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 4},
         {name: "LG Urbane", scheduled: true, numTickets: 4},
 
         // special one-off things that probably don't even get picked up by the code below
