@@ -129,7 +129,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
     var isSunday = (new Date().getDay() === 0);
     var knownSweekstakes = [
         // food (ish)
-        {name: "Arby's"},
+        {name: "Arby"}, // sometimes written as Arby's and other times Arbys
         {name: "Ben and Jerry"}, // sometimes Jerry's other times Jerrys - this matches both
         {name: "Buffalo Wild Wings", scheduled: isSunday, numTickets: 5},
         {name: "Cabela's"},
