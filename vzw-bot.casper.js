@@ -144,6 +144,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
         // shopping & misc.
         {name: "AMC"},
+        {name: 'Regal', scheduled: isSunday, numTickets: 30},
         {name: "Amazon", scheduled: isSunday, numTickets: 50},
         {name: "Barnes and Noble", scheduled: isSunday, numTickets: 5},
         {name: "AutoZone"},
@@ -173,8 +174,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Whole Foods", scheduled: isSunday, numTickets: 10},
 
         // daily sweeps
-        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 4},
-        {name: "LG Urbane", scheduled: true, numTickets: 4},
+        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 9},
+        {name: "LG Urbane", scheduled: true, numTickets: 9},
 
         // special one-off things that probably don't even get picked up by the code below
         {name: "Cyber Shop til You Drop"},
