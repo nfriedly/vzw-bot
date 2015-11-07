@@ -175,7 +175,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
         // daily sweeps
         {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 9},
-        {name: "LG Urbane", scheduled: true, numTickets: 9},
+        {name: "LG Urbane", scheduled: true, numTickets: 49},
 
         // special one-off things that probably don't even get picked up by the code below
         {name: "Cyber Shop til You Drop"},
