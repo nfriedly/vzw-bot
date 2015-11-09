@@ -130,8 +130,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
     var isSunday = (today.getDay() === 0);
     var knownSweekstakes = [
         // food (ish)
-        {name: "Arby"}, // sometimes written as Arby's and other times Arbys
-        {name: "Ben and Jerry"}, // sometimes Jerry's other times Jerrys - this matches both
+        {name: "Arby'?s"}, // sometimes written as Arby's and other times Arbys
+        {name: "Ben and Jerry'?s"}, // sometimes Jerry's other times Jerrys - this matches both
         {name: "Buffalo Wild Wings", scheduled: isSunday, numTickets: 5},
         {name: "Cabela's"},
         {name: "Cracker Barrel", scheduled: isSunday, numTickets: 5},
@@ -142,6 +142,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Ritas"},
         {name: "Starbucks"},
         {name: "Boston Market"},
+        {name: "Cold Stone Creamery"},
 
         // shopping & misc.
         {name: "AMC"},
@@ -157,7 +158,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Game Stop", scheduled: isSunday, numTickets: 10},
         {name: "Gap", scheduled: isSunday, numTickets: 10},
         {name: "Home Depot", scheduled: isSunday, numTickets: 10},
-        {name: "iTunes", scheduled: isSunday, numTickets: 20}, // also written "Itunes" once
+        {name: "iTunes|Itunes", scheduled: isSunday, numTickets: 20},
         {name: "Jiffy Lube"},
         {name: "Kohl's", scheduled: isSunday, numTickets: 10},
         {name: "Rite Aid", scheduled: isSunday, numTickets: 5},
