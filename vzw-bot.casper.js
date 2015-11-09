@@ -122,11 +122,12 @@ function enterSweepstakes(details) {
     casper.back();
 }
 
+var today = new Date();
 
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
 
     // todo: grab the history first and then go through each current sweepstakes to ensure that at least numTickets have been purchased
-    var isSunday = (new Date().getDay() === 0);
+    var isSunday = (today.getDay() === 0);
     var knownSweekstakes = [
         // food (ish)
         {name: "Arby"}, // sometimes written as Arby's and other times Arbys
@@ -175,7 +176,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
         // daily sweeps
         {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 9},
-        {name: "LG Urbane", scheduled: true, numTickets: 49},
+        {name: "LG Urbane", scheduled: true, numTickets: (today < new Date("2015-11-15 11:59 pm EST")) ? 49 : 9},
 
         // special one-off things that probably don't even get picked up by the code below
         {name: "Cyber Shop til You Drop"},
