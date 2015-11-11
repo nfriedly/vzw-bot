@@ -162,7 +162,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Barnes and Noble", scheduled: isSunday, numTickets: 5},
         {name: "AutoZone"},
         {name: "Bed Bath and Beyond", scheduled: isSunday, numTickets: 5},
-        {name: "Bath & Body Works", scheduled: isSunday, numTickets: 5},
+        {name: "Bath & Body Works|Bath Body Works", scheduled: isSunday, numTickets: 5},
         {name: "Best Buy"},
         {name: "Build-A-Bear"},
         {name: "Footlocker", scheduled: isSunday, numTickets: 5},
@@ -175,7 +175,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Rite Aid", scheduled: isSunday, numTickets: 5},
         {name: "Sally's"},
         {name: "Ulta Beauty"},
-        {name: "Earrings"},
+        {name: "Earrings|Necklace"},
         {name: "CVS", scheduled: isSunday, numTickets: 10},
 
         // gas
