@@ -156,8 +156,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Cold Stone Creamery"},
 
         // shopping & misc.
-        {name: "AMC"},
-        {name: 'Regal', scheduled: isSunday, numTickets: 30},
+        {name: "AMC"},   // cinci has an amc, but meh
+        {name: 'Regal'}, // we have a cinemark and a rave (apparently owned by cinemark)
         {name: "Amazon", scheduled: isSunday, numTickets: 50},
         {name: "Barnes and Noble", scheduled: isSunday, numTickets: 5},
         {name: "AutoZone"},
