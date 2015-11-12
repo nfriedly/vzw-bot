@@ -154,6 +154,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {name: "Starbucks"},
         {name: "Boston Market"},
         {name: "Cold Stone Creamery"},
+        {name: "Wendy'?s", scheduled: isSunday, numTickets: 10},
 
         // shopping & misc.
         {name: "AMC"},   // cinci has an amc, but meh
