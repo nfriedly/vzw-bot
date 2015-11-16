@@ -101,6 +101,8 @@ casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
     checkForWin();
     checkNext();
 
+    this.echo('Points at start: ' + this.fetchText('#rewardsbalancevalue'));
+
     this.then(function() {
         this.echo("Going to sweepstakes listing");
         this.click('#HL-R-CurrentSweepstakes');
@@ -253,6 +255,8 @@ casper.then(function () {
         this.echo("Current Entries:");
         entries.forEach(function(entry){this.echo(" - " + entry);}, this);
     }
+
+    this.echo('Points at end: ' + this.fetchText('#rewardsbalancevalue'));
 });
 
 
