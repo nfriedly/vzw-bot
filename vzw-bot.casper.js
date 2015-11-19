@@ -97,6 +97,35 @@ function checkNext() {
     }
 }
 
+// get our initial number of entries
+casper.waitForSelector('#HL-Account', function goToAccount() {
+    this.echo('Fetching status');
+    this.click('#HL-Account');
+});
+
+casper.waitForSelector('#red5', function goToSweepstakesHistory() {
+    this.click('#red5');
+});
+
+var currentEntries = {};
+casper.then(function () {
+    var entries = this.evaluate(function() {
+        /*globals $*/
+        return $('div.panel:has(h1:contains(Current Sweepstakes)) a.title')
+            .map(function(){ return this.textContent; })
+            .toArray();
+    });
+    entries.forEach(function(entry){
+        var parts = entry.match(/(.*) \((\d+)\s+Tickets\)/);
+        if (!parts) {
+            this.echo('Unable to parse current entries for ' + entry);
+            this.echo(parts);
+        } else {
+            currentEntries[parts[1]] = parseInt(parts[2], 10);
+        }
+    }, this);
+});
+
 casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
     checkForWin();
     checkNext();
@@ -110,125 +139,114 @@ casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
 });
 
 
-function enterSweepstakes(details) {
-    var sweepstakes = details.name, numTickets = details.numTickets;
 
-    casper.then(function() {
-        this.echo("Entering " + sweepstakes + '...');
-    });
-
-    casper.wait((Math.random()*30+5)*1000); // wait a few seconds - todo: nix this for localdev
-
-    casper.waitForText(sweepstakes, function findTablet() {
-        this.clickLabel(sweepstakes, 'a');
-    });
-
-    casper.waitForSelector('#form_buytickets', function buyTickets() {
-        this.fill('#form_buytickets', {ticketQty: numTickets, agreement: true}, true);
-    });
-
-    casper.waitForSelector('#ocBox', function done() {
-        this.echo("Entered!");
-        //this.capture('./' + (sweepstakes.replace(/[^a-z0-9]+/ig, ' ').trim().replace(/ /g, '-')) + '.png');
-    });
-
-    casper.back();
-}
-
-var today = new Date();
 
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
-
-    // todo: grab the history first and then go through each current sweepstakes to ensure that at least numTickets have been purchased
-    var isSunday = (today.getDay() === 0);
+    
     var knownSweekstakes = [
         // food (ish)
-        {name: "Arby'?s"}, // sometimes written as Arby's and other times Arbys
-        {name: "Ben and Jerry'?s"}, // sometimes Jerry's other times Jerrys - this matches both
-        {name: "Buffalo Wild Wings", scheduled: isSunday, numTickets: 5},
-        {name: "Cabela's"},
-        {name: "Cracker Barrel", scheduled: isSunday, numTickets: 5},
-        {name: "Dave and Buster's"},
-        {name: "Dunkin Donuts"},
-        {name: "GNC"},
-        {name: "Papa John's", scheduled: isSunday, numTickets: 5},
-        {name: "Ritas"},
-        {name: "Starbucks"},
-        {name: "Boston Market"},
-        {name: "Cold Stone Creamery"},
-        {name: "Wendy'?s", scheduled: isSunday, numTickets: 10},
+        {matcher: "Arby'?s"}, // sometimes written as Arby's and other times Arbys
+        {matcher: "Ben and Jerry'?s"}, // sometimes Jerry's other times Jerrys - this matches both
+        {matcher: "Boston Market"},
+        {matcher: "Buffalo Wild Wings", tickets: 5},
+        {matcher: "Cabela's"},
+        {matcher: "Cold Stone Creamery"},
+        {matcher: "Cracker Barrel", tickets: 5},
+        {matcher: "Dave and Buster's"},
+        {matcher: "Dunkin Donuts"},
+        {matcher: "GNC"},
+        {matcher: "Papa John's", tickets: 5},
+        {matcher: "Ritas"},
+        {matcher: "Starbucks"},
+        {matcher: "Wendy'?s", tickets: 10},
 
         // shopping & misc.
-        {name: "AMC"},   // cinci has an amc, but meh
-        {name: 'Regal'}, // we have a cinemark and a rave (apparently owned by cinemark)
-        {name: "Amazon", scheduled: isSunday, numTickets: 50},
-        {name: "Barnes and Noble", scheduled: isSunday, numTickets: 5},
-        {name: "AutoZone"},
-        {name: "Bed Bath and Beyond", scheduled: isSunday, numTickets: 5},
-        {name: "Bath & Body Works|Bath Body Works", scheduled: isSunday, numTickets: 5},
-        {name: "Best Buy"},
-        {name: "Build-A-Bear"},
-        {name: "Footlocker", scheduled: isSunday, numTickets: 5},
-        {name: "Game Stop", scheduled: isSunday, numTickets: 10},
-        {name: "Gap", scheduled: isSunday, numTickets: 10},
-        {name: "Home Depot", scheduled: isSunday, numTickets: 10},
-        {name: "iTunes|Itunes", scheduled: isSunday, numTickets: 20},
-        {name: "Jiffy Lube"},
-        {name: "Kohl's", scheduled: isSunday, numTickets: 10},
-        {name: "Rite Aid", scheduled: isSunday, numTickets: 5},
-        {name: "Sally's"},
-        {name: "Ulta Beauty"},
-        {name: "Earrings|Necklace"},
-        {name: "CVS", scheduled: isSunday, numTickets: 10},
+        {matcher: "AMC"},   // cinci has an amc, but meh
+        {matcher: 'Regal'}, // we have a cinemark and a rave (apparently owned by cinemark)
+        {matcher: "Amazon", tickets: 50},
+        {matcher: "Barnes and Noble", tickets: 5},
+        {matcher: "AutoZone"},
+        {matcher: "Bed Bath and Beyond", tickets: 5},
+        {matcher: "Bath & Body Works|Bath Body Works", tickets: 5},
+        {matcher: "Best Buy"},
+        {matcher: "Build-A-Bear"},
+        {matcher: "CVS", tickets: 10},
+        {matcher: "Earrings|Necklace"},
+        {matcher: "Footlocker", tickets: 5},
+        {matcher: "Game Stop", tickets: 10},
+        {matcher: "Gap", tickets: 10},
+        {matcher: "Home Depot", tickets: 10},
+        {matcher: "Homegoods"},
+        {matcher: "iTunes|Itunes", tickets: 20},
+        {matcher: "Jiffy Lube"},
+        {matcher: "Kohl's", tickets: 10},
+        {matcher: "Rite Aid", tickets: 5},
+        {matcher: "Sally's"},
+        {matcher: "Ulta Beauty"},
 
         // gas
-        {name: "BP", scheduled: isSunday, numTickets: 10},
-        {name: "Chevron"},
-        {name: "Mobil"},
-        {name: "Verizon", scheduled: isSunday, numTickets: 50},
-        {name: "Walmart", scheduled: isSunday, numTickets: 20},
-        {name: "Whole Foods", scheduled: isSunday, numTickets: 10},
+        {matcher: "BP", tickets: 10},
+        {matcher: "Chevron"},
+        {matcher: "Mobil"},
+        {matcher: "Verizon", tickets: 50},
+        {matcher: "Walmart", tickets: 20},
+        {matcher: "Whole Foods", tickets: 10},
 
         // daily sweeps
-        {name: "Samsung Galaxy Tab", scheduled: true, numTickets: 9},
-        {name: "LG Urbane", scheduled: true, numTickets: 19},
+        {matcher: "Samsung Galaxy Tab", tickets: 10},
+        {matcher: "LG Urbane", tickets: 20},
 
-        // special one-off things that probably don't even get picked up by the code below
-        {name: "Cyber Shop til You Drop"},
-        {name: "Family Fall Favorites"},
-        {name: "Thomas Rhett Autographed Guitar"},
+        // sgit st sweeps
+        {matcher: "500 Visa Gift Card", tickets: 10},
+        {matcher: "Tour of Wine Country"},
+        {matcher: "A Night On Broadway", tickets: 10},
+        {matcher: "Winter Getaway"}
     ];
 
-    var sweepstakesToEnterToday = [];
 
     var availableSweepstakes = this.evaluate(function () {
         /*globals $*/
-        return $('div.price-matrix h1 a').map(function () {
-            return this.textContent;
+        return $('div.price-matrix h1 a, li.featSweep h4:not(.panel-title)').map(function () {
+            return {name: this.textContent, url: this.href || $(this).parents('li.featSweep').find('a.see-details')[0].href};
         }).toArray();
     });
 
-    var reKnown = new RegExp(knownSweekstakes.map(function(d) {return d.name;}).join('|'));
-    availableSweepstakes.forEach(function (sweepstakes) {
-        var match = sweepstakes.match(reKnown);
-        if (match) {
-            knownSweekstakes.some(function(details) {
-                if (details.name == match[0]) {
-                    if (details.scheduled) {
-                        sweepstakesToEnterToday.push({
-                            name: sweepstakes, // get the full text that's on the link rather than the short name in the code
-                            numTickets: details.numTickets
-                        });
-                    }
-                    return true; // stop the .some loop, we found the one we were looking for (even if it isn't scheduled for today)
+    // iterate over the list of available sweepstakes to check if we know of it and have already purchased the requested number of tickets
+    availableSweepstakes.forEach(function (availableDetails) {
+        var sweepstakes = availableDetails.name;
+
+        // .some so that we can stop as soon as we find the matching sweepstakes
+        var isKnown = knownSweekstakes.some(function(knownDetails) {
+            knownDetails.re = knownDetails.re || new RegExp(knownDetails.matcher);
+            var match = sweepstakes.match(knownDetails.re);
+            if (match) {
+                // found a hit, see if we need to buy tickets
+                var currentNumTickets = currentEntries[sweepstakes] || 0,
+                    numTicketsToBuy = (knownDetails.tickets || 0) - currentNumTickets;
+
+                if (numTicketsToBuy > 0) {
+
+                    casper.then(function () {
+                        this.echo("Buying " + numTicketsToBuy + " tickets for " + sweepstakes + '...');
+                    });
+
+                    casper.wait((Math.random()*30+5)*1000); // wait a few seconds - todo: nix this for localdev
+
+                    casper.waitForSelector('#form_buytickets', function () {
+                        this.fill('#form_buytickets', {ticketQty: numTicketsToBuy, agreement: true}, true);
+                    });
+
+                    casper.waitForSelector('#ocBox', function () {
+                        this.echo("Entered!");
+                    });
                 }
-            });
-        } else {
+                return true; // stop the .some loop, we found the one we were looking for
+            }
+        });
+        if (!isKnown) {
             this.echo('New sweepstakes: ' + sweepstakes);
         }
     }, this);
-
-    sweepstakesToEnterToday.forEach(enterSweepstakes);
 
 });
 
