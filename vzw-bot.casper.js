@@ -196,9 +196,9 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {matcher: "Samsung Galaxy Tab", tickets: 10},
         {matcher: "LG Urbane", tickets: 20},
 
-        // sgit st sweeps
+        // featured sweeps that are probably one-off things
         {matcher: "500 Visa Gift Card", tickets: 10},
-        {matcher: "Tour of Wine Country"},
+        {matcher: "Tour of Wine Country", tickets: 10},
         {matcher: "A Night On Broadway", tickets: 10},
         {matcher: "Winter Getaway"}
     ];
