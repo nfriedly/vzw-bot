@@ -116,7 +116,7 @@ casper.then(function () {
             .toArray();
     });
     entries.forEach(function(entry){
-        var parts = entry.match(/(.*) \((\d+)\s+Tickets\)/);
+        var parts = entry.match(/(.*) \((\d+)\s+Ticket(s| )\)/);
         if (!parts) {
             this.echo('Unable to parse current entries for ' + entry);
             this.echo(parts);
