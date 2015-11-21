@@ -230,6 +230,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
                         this.echo("Buying " + numTicketsToBuy + " tickets for " + sweepstakes + '...');
                     });
 
+                    casper.thenOpen(availableDetails.url);
+
                     casper.wait((Math.random()*30+5)*1000); // wait a few seconds - todo: nix this for localdev
 
                     casper.waitForSelector('#form_buytickets', function () {
