@@ -172,7 +172,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {matcher: "Build-A-Bear"},
         {matcher: "CVS", tickets: 10},
         {matcher: "Earrings|Necklace"},
-        {matcher: "Footlocker", tickets: 5},
+        {matcher: "Express", tickets: 25},
         {matcher: "Game Stop", tickets: 10},
         {matcher: "Gap", tickets: 10},
         {matcher: "Home Depot", tickets: 10},
