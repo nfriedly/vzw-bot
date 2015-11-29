@@ -155,6 +155,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {matcher: "Dave and Buster's"},
         {matcher: "Dunkin Donuts"},
         {matcher: "GNC"},
+        {matcher: "IHOP"},
         {matcher: "Papa John's", tickets: 5},
         {matcher: "Ritas"},
         {matcher: "Starbucks"},
@@ -180,6 +181,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
         {matcher: "iTunes|Itunes", tickets: 20},
         {matcher: "Jiffy Lube"},
         {matcher: "Kohl's", tickets: 10},
+        {matcher: "Macy's", tickets: 10},
         {matcher: "Rite Aid", tickets: 5},
         {matcher: "Sally's"},
         {matcher: "Ulta Beauty"},
@@ -194,7 +196,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
         // daily sweeps
         {matcher: "Samsung Galaxy Tab", tickets: 10},
-        {matcher: "LG Urbane", tickets: 20},
+        {matcher: "LG Urbane"},
+        {marcher: "Macbook|MacBook", tickets: 100},
 
         // featured sweeps that are probably one-off things
         {matcher: "500 Visa Gift Card", tickets: 10},
