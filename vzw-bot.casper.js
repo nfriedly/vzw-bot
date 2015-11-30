@@ -2,6 +2,76 @@
 
 "use strict";
 
+// todo: calculate the cost and don't spend more points than I have
+// also, consider adding a way to prioritize
+
+var knownSweekstakes = [
+    // food (ish)
+    {matcher: /Arby'?s/}, // sometimes written as Arby's and other times Arbys
+    {matcher: /Ben and Jerry'?s/}, // sometimes Jerry's other times Jerrys - this matches both
+    {matcher: /Boston Market/},
+    {matcher: /Buffalo Wild Wings/, tickets: 5},
+    {matcher: /Cabela'?s/},
+    {matcher: /Cold Stone Creamery/},
+    {matcher: /Cracker Barrel/, tickets: 5},
+    {matcher: /Dave and Buster's/},
+    {matcher: /Dunkin Donuts/},
+    {matcher: /GNC/},
+    {matcher: /IHOP/},
+    {matcher: /Papa John's/, tickets: 5},
+    {matcher: /Ritas/},
+    {matcher: /Starbucks/},
+    {matcher: /Wendy'?s/, tickets: 10},
+
+    // shopping & misc.
+    {matcher: /AMC/},   // cinci has an amc, but meh
+    {matcher: /Regal/}, // we have a cinemark and a rave (apparently owned by cinemark)
+    {matcher: /Amazon/, tickets: 50},
+    {matcher: /Barnes and Noble/, tickets: 5},
+    {matcher: /AutoZone/},
+    {matcher: /Bed Bath and Beyond/, tickets: 5},
+    {matcher: /Bath & Body Works|Bath Body Works/, tickets: 5},
+    {matcher: /Best Buy/},
+    {matcher: /Build-A-Bear/},
+    {matcher: /CVS/, tickets: 10},
+    {matcher: /Earrings|Necklace/},
+    {matcher: /Express/, tickets: 25},
+    {matcher: /Game Stop/, tickets: 10},
+    {matcher: /\bGap\b/, tickets: 10},
+    {matcher: /Home Depot/, tickets: 10},
+    {matcher: /Homegoods/},
+    {matcher: /iTunes/i, tickets: 20},
+    {matcher: /Jiffy Lube/},
+    {matcher: /Kohl's/, tickets: 10},
+    {matcher: /Macy's/, tickets: 10},
+    {matcher: /Pier 1 Imports/},
+    {matcher: /Rite Aid/, tickets: 5},
+    {matcher: /Sally's/},
+    {matcher: /Ulta Beauty/},
+
+    // gas
+    {matcher: /\bBP\b/, tickets: 10},
+    {matcher: /Chevron/},
+    {matcher: /Mobil/},
+    {matcher: /Verizon/, tickets: 50},
+    {matcher: /Walmart/, tickets: 20},
+    {matcher: /Whole Foods/, tickets: 10},
+
+    // daily sweeps
+    {matcher: /Samsung Galaxy Tab/, tickets: 10},
+    {matcher: /LG Urbane/},
+
+    // featured sweeps that are probably one-off things
+    {matcher: /500 Visa Gift Card/, tickets: 10},
+    {matcher: /Tour of Wine Country/, tickets: 10},
+    {matcher: /A Night On Broadway/, tickets: 10},
+    {matcher: /Winter Getaway/},
+    {matcher: /Tablets For All/},
+    {matcher: /Macbook/i, tickets: 100},
+    {matcher: /Xbox One/i, tickets: 100},
+];
+
+
 var usageMsg = [
     'Usage: ',
     'vzw-bot --username=foo@bar.com --password=abc123 --secret="secret question answer'
@@ -142,70 +212,6 @@ casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
 
 
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
-    
-    var knownSweekstakes = [
-        // food (ish)
-        {matcher: "Arby'?s"}, // sometimes written as Arby's and other times Arbys
-        {matcher: "Ben and Jerry'?s"}, // sometimes Jerry's other times Jerrys - this matches both
-        {matcher: "Boston Market"},
-        {matcher: "Buffalo Wild Wings", tickets: 5},
-        {matcher: "Cabela's"},
-        {matcher: "Cold Stone Creamery"},
-        {matcher: "Cracker Barrel", tickets: 5},
-        {matcher: "Dave and Buster's"},
-        {matcher: "Dunkin Donuts"},
-        {matcher: "GNC"},
-        {matcher: "IHOP"},
-        {matcher: "Papa John's", tickets: 5},
-        {matcher: "Ritas"},
-        {matcher: "Starbucks"},
-        {matcher: "Wendy'?s", tickets: 10},
-
-        // shopping & misc.
-        {matcher: "AMC"},   // cinci has an amc, but meh
-        {matcher: 'Regal'}, // we have a cinemark and a rave (apparently owned by cinemark)
-        {matcher: "Amazon", tickets: 50},
-        {matcher: "Barnes and Noble", tickets: 5},
-        {matcher: "AutoZone"},
-        {matcher: "Bed Bath and Beyond", tickets: 5},
-        {matcher: "Bath & Body Works|Bath Body Works", tickets: 5},
-        {matcher: "Best Buy"},
-        {matcher: "Build-A-Bear"},
-        {matcher: "CVS", tickets: 10},
-        {matcher: "Earrings|Necklace"},
-        {matcher: "Express", tickets: 25},
-        {matcher: "Game Stop", tickets: 10},
-        {matcher: "Gap", tickets: 10},
-        {matcher: "Home Depot", tickets: 10},
-        {matcher: "Homegoods"},
-        {matcher: "iTunes|Itunes", tickets: 20},
-        {matcher: "Jiffy Lube"},
-        {matcher: "Kohl's", tickets: 10},
-        {matcher: "Macy's", tickets: 10},
-        {matcher: "Rite Aid", tickets: 5},
-        {matcher: "Sally's"},
-        {matcher: "Ulta Beauty"},
-
-        // gas
-        {matcher: "BP", tickets: 10},
-        {matcher: "Chevron"},
-        {matcher: "Mobil"},
-        {matcher: "Verizon", tickets: 50},
-        {matcher: "Walmart", tickets: 20},
-        {matcher: "Whole Foods", tickets: 10},
-
-        // daily sweeps
-        {matcher: "Samsung Galaxy Tab", tickets: 10},
-        {matcher: "LG Urbane"},
-        {marcher: "Macbook|MacBook", tickets: 100},
-
-        // featured sweeps that are probably one-off things
-        {matcher: "500 Visa Gift Card", tickets: 10},
-        {matcher: "Tour of Wine Country", tickets: 10},
-        {matcher: "A Night On Broadway", tickets: 10},
-        {matcher: "Winter Getaway"}
-    ];
-
 
     var availableSweepstakes = this.evaluate(function () {
         /*globals $*/
@@ -220,9 +226,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
         // .some so that we can stop as soon as we find the matching sweepstakes
         var isKnown = knownSweekstakes.some(function(knownDetails) {
-            knownDetails.re = knownDetails.re || new RegExp(knownDetails.matcher);
-            var match = sweepstakes.match(knownDetails.re);
-            if (match) {
+            if (knownDetails.matcher.test(sweepstakes)) {
                 // found a hit, see if we need to buy tickets
                 var currentNumTickets = currentEntries[sweepstakes] || 0,
                     numTicketsToBuy = (knownDetails.tickets || 0) - currentNumTickets;
@@ -235,7 +239,7 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
 
                     casper.thenOpen(availableDetails.url);
 
-                    casper.wait((Math.random()*30+5)*1000); // wait a few seconds - todo: nix this for localdev
+                    casper.wait((Math.random()*30+5)*1000); // wait a few seconds
 
                     casper.waitForSelector('#form_buytickets', function () {
                         this.fill('#form_buytickets', {ticketQty: numTicketsToBuy, agreement: true}, true);
