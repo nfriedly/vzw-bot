@@ -69,6 +69,8 @@ var knownSweekstakes = [
     {matcher: /Tablets For All/},
     {matcher: /Macbook/i, tickets: 100},
     {matcher: /Xbox One/i, tickets: 100},
+    {matcher: /Dash For Holiday Cash/i, tickets: 5},
+    {matcher: /Gift For You - Gift For Charity/i, tickets: 3},
 ];
 
 
