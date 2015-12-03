@@ -6,6 +6,8 @@
 // also, consider adding a way to prioritize
 
 var knownSweekstakes = [
+    // default ratio is 0.1 (10% of available tickets at start). Script should purchase the lowest of (tickets, ratio * total tickets at start, total tickets currently remaining)
+
     // food (ish)
     {matcher: /Arby'?s/}, // sometimes written as Arby's and other times Arbys
     {matcher: /Ben and Jerry'?s/}, // sometimes Jerry's other times Jerrys - this matches both
@@ -26,7 +28,7 @@ var knownSweekstakes = [
     // shopping & misc.
     {matcher: /AMC/},   // cinci has an amc, but meh
     {matcher: /Regal/}, // we have a cinemark and a rave (apparently owned by cinemark)
-    {matcher: /Amazon/, tickets: 50},
+    {matcher: /Amazon/, tickets: 50, ratio: 0.2},
     {matcher: /Barnes and Noble/, tickets: 5},
     {matcher: /AutoZone/},
     {matcher: /Bed Bath and Beyond/, tickets: 5},
@@ -35,12 +37,12 @@ var knownSweekstakes = [
     {matcher: /Build-A-Bear/},
     {matcher: /CVS/, tickets: 10},
     {matcher: /Earrings|Necklace/},
-    {matcher: /Express/, tickets: 25},
+    {matcher: /Express/, tickets: 25, ratio: 0.2},
     {matcher: /Game Stop/, tickets: 10},
     {matcher: /\bGap\b/, tickets: 10},
     {matcher: /Home Depot/, tickets: 10},
     {matcher: /Homegoods/},
-    {matcher: /iTunes/i, tickets: 20},
+    {matcher: /iTunes/i, tickets: 30, ratio: 0.2},
     {matcher: /Jiffy Lube/},
     {matcher: /Kohl's/, tickets: 10},
     {matcher: /Macy's/, tickets: 10},
@@ -57,22 +59,23 @@ var knownSweekstakes = [
     {matcher: /Walmart/, tickets: 20},
     {matcher: /Whole Foods/, tickets: 10},
 
+    //money
+    {matcher: /500 Visa Gift Card/, tickets: 30, ratio: 1},
+
     // daily sweeps
     {matcher: /Samsung Galaxy Tab/, tickets: 10},
     {matcher: /LG Urbane/},
 
     // featured sweeps that are probably one-off things
-    {matcher: /500 Visa Gift Card/, tickets: 10},
     {matcher: /Tour of Wine Country/, tickets: 10},
     {matcher: /A Night On Broadway/, tickets: 10},
     {matcher: /Winter Getaway/},
     {matcher: /Tablets For All/},
-    {matcher: /Macbook/i, tickets: 100},
-    {matcher: /Xbox One/i, tickets: 100},
-    {matcher: /Dash For Holiday Cash/i, tickets: 5},
+    {matcher: /Macbook/i, tickets: 100, ratio: 1},
+    {matcher: /Xbox One/i, tickets: 100, ratio: 1},
+    {matcher: /Dash For Holiday Cash/i, tickets: 5, ratio: 0.01},
     {matcher: /Gift For You - Gift For Charity/i, tickets: 3},
 ];
-
 
 var usageMsg = [
     'Usage: ',
@@ -198,11 +201,16 @@ casper.then(function () {
     }, this);
 });
 
+
+var pointsAvailable = 0;
+
 casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
     checkForWin();
     checkNext();
 
     this.echo('Points at start: ' + this.fetchText('#rewardsbalancevalue'));
+
+    pointsAvailable = parseInt(this.fetchText('#rewardsbalancevalue').trim().replace(/,/g, ''), 0);
 
     this.then(function() {
         this.echo("Going to sweepstakes listing");
@@ -233,10 +241,11 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
                 var currentNumTickets = currentEntries[sweepstakes] || 0,
                     numTicketsToBuy = (knownDetails.tickets || 0) - currentNumTickets;
 
-                if (numTicketsToBuy > 0) {
+                // initial short-circuit if we're already at the desired target (or out of points)
+                if (numTicketsToBuy > 0 && pointsAvailable) {
 
                     casper.then(function () {
-                        this.echo("Buying " + numTicketsToBuy + " tickets for " + sweepstakes + '...');
+                        this.echo("Going to " + sweepstakes + '...');
                     });
 
                     casper.thenOpen(availableDetails.url);
@@ -244,6 +253,17 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
                     casper.wait((Math.random()*30+5)*1000); // wait a few seconds
 
                     casper.waitForSelector('#form_buytickets', function () {
+
+                        // update since we may have spent some on the last step
+                        pointsAvailable = parseInt(this.fetchText('#rewardsbalancevalue').trim().replace(/,/g, ''), 0);
+                        var cost = parseInt(this.fetchText('span.update_finalPrice').trim(), 0);
+                        var maxTicketsPossible = Math.floor(pointsAvailable/cost);
+                        var ratio = knownDetails.ratio || 0.1;
+                        var maxTicketsRatio = Math.round(pointsAvailable * ratio / cost);
+                        numTicketsToBuy = Math.min(maxTicketsPossible, Math.min(numTicketsToBuy, maxTicketsRatio));
+
+                        this.echo("Buying " + numTicketsToBuy + " tickets for " + sweepstakes + '...');
+
                         this.fill('#form_buytickets', {ticketQty: numTicketsToBuy, agreement: true}, true);
                     });
 
