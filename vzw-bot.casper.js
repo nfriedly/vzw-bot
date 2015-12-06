@@ -14,6 +14,7 @@ var knownSweekstakes = [
     {matcher: /Boston Market/},
     {matcher: /Buffalo Wild Wings/, tickets: 5},
     {matcher: /Cabela'?s/},
+    {matcher: /Chick Fil A/, tickets: 20},
     {matcher: /Cold Stone Creamery/},
     {matcher: /Cracker Barrel/, tickets: 5},
     {matcher: /Dave and Buster's/},
@@ -31,6 +32,7 @@ var knownSweekstakes = [
     {matcher: /Amazon/, tickets: 50, ratio: 0.2},
     {matcher: /Barnes and Noble/, tickets: 5},
     {matcher: /AutoZone/},
+    {matcher: /Bass Pro Shop/},
     {matcher: /Bed Bath and Beyond/, tickets: 5},
     {matcher: /Bath & Body Works|Bath Body Works/, tickets: 5},
     {matcher: /Best Buy/},
@@ -75,6 +77,7 @@ var knownSweekstakes = [
     {matcher: /Xbox One/i, tickets: 100, ratio: 1},
     {matcher: /Dash For Holiday Cash/i, tickets: 5, ratio: 0.01},
     {matcher: /Gift For You - Gift For Charity/i, tickets: 3},
+    {matcher: /Entertainment For All/, tickets: 5},
 ];
 
 var usageMsg = [
@@ -274,6 +277,8 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
                 return true; // stop the .some loop, we found the one we were looking for
             }
         });
+
+        // todo: also check upcoming sweeps and report new ones there so that I can babysit this thing less often
         if (!isKnown) {
             this.echo('New sweepstakes: ' + sweepstakes);
         }
