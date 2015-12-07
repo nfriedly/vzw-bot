@@ -6,7 +6,7 @@
 // also, consider adding a way to prioritize
 
 var knownSweekstakes = [
-    // default ratio is 0.1 (10% of available tickets at start). Script should purchase the lowest of (tickets, ratio * total tickets at start, total tickets currently remaining)
+    // default ratio is 0.1 (Meaning that the script should spend a maximum of 10% of available points on a single sweepstakes in a single run.)
 
     // food (ish)
     {matcher: /Arby'?s/}, // sometimes written as Arby's and other times Arbys
@@ -53,14 +53,14 @@ var knownSweekstakes = [
     {matcher: /Rite Aid/, tickets: 5},
     {matcher: /Sally's/},
     {matcher: /Ulta Beauty/},
+    {matcher: /Verizon/, tickets: 50},
+    {matcher: /Walmart/, tickets: 20},
+    {matcher: /Whole Foods/, tickets: 10},
 
     // gas
     {matcher: /\bBP\b/, tickets: 10},
     {matcher: /Chevron/},
     {matcher: /Mobil/},
-    {matcher: /Verizon/, tickets: 50},
-    {matcher: /Walmart/, tickets: 20},
-    {matcher: /Whole Foods/, tickets: 10},
 
     //money
     {matcher: /500 Visa Gift Card/, tickets: 30, ratio: 1},
