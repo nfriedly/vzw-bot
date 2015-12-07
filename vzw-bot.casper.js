@@ -45,6 +45,7 @@ var knownSweekstakes = [
     {matcher: /Home Depot/, tickets: 10},
     {matcher: /Homegoods/},
     {matcher: /iTunes/i, tickets: 30, ratio: 0.2},
+    {matcher: /JC Penny/, tickets: 10},
     {matcher: /Jiffy Lube/},
     {matcher: /Kohl's/, tickets: 10},
     {matcher: /Macy's/, tickets: 10},
@@ -75,7 +76,7 @@ var knownSweekstakes = [
     {matcher: /Tablets For All/},
     {matcher: /Macbook/i, tickets: 100, ratio: 1},
     {matcher: /Xbox One/i, tickets: 100, ratio: 1},
-    {matcher: /Dash For Holiday Cash/i, tickets: 5, ratio: 0.01},
+    {matcher: /Dash For Holiday Cash/i, tickets: 5},
     {matcher: /Gift For You - Gift For Charity/i, tickets: 3},
     {matcher: /Entertainment For All/, tickets: 5},
 ];
