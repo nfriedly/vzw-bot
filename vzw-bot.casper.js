@@ -18,6 +18,7 @@ var knownSweekstakes = [
     {matcher: /Cold Stone Creamery/},
     {matcher: /Cracker Barrel/, tickets: 5},
     {matcher: /Dave and Buster's/},
+    {matcher: /Dennys/},
     {matcher: /Dunkin Donuts/},
     {matcher: /GNC/},
     {matcher: /IHOP/},
@@ -194,6 +195,11 @@ casper.then(function () {
             .map(function(){ return this.textContent; })
             .toArray();
     });
+    // failsafe so that I don't buy double of everything if the previous step failed
+    if (!entries || !entries.length) {
+        this.echo("No current entries found, aborting.");
+        this.exit(1);
+    }
     entries.forEach(function(entry){
         var parts = entry.match(/(.*) \((\d+)\s+Ticket(s| )\)/);
         if (!parts) {
@@ -204,7 +210,6 @@ casper.then(function () {
         }
     }, this);
 });
-
 
 var pointsAvailable = 0;
 
@@ -221,8 +226,6 @@ casper.waitForSelector('#HL-R-CurrentSweepstakes', function rewardsHome() {
         this.click('#HL-R-CurrentSweepstakes');
     });
 });
-
-
 
 
 casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawayhome&resetPageNum=Y&sweepstype=cs&pageSize=48', function () {
