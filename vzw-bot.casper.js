@@ -39,7 +39,7 @@ var knownSweekstakes = [
     {matcher: /Best Buy/},
     {matcher: /Build-A-Bear/},
     {matcher: /CVS/, tickets: 10},
-    {matcher: /Earrings|Necklace/},
+    {matcher: /Earring|Necklace/},
     {matcher: /Express/, tickets: 25, ratio: 0.2},
     {matcher: /Game Stop/, tickets: 10},
     {matcher: /\bGap\b/, tickets: 10},
