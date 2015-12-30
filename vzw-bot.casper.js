@@ -46,7 +46,7 @@ var knownSweekstakes = [
     {matcher: /Home Depot/, tickets: 10},
     {matcher: /Homegoods/},
     {matcher: /iTunes/i, tickets: 30, ratio: 0.2},
-    {matcher: /JC Penny/, tickets: 10},
+    {matcher: /JC Penne?y/, tickets: 10}, // verizon spells it wrong sometimes.. I almost wonder if it's on purpose
     {matcher: /Jiffy Lube/},
     {matcher: /Kohl's/, tickets: 10},
     {matcher: /Macy's/, tickets: 10},
