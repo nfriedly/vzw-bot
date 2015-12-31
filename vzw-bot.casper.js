@@ -50,6 +50,7 @@ var knownSweekstakes = [
     {matcher: /Jiffy Lube/},
     {matcher: /Kohl's/, tickets: 10},
     {matcher: /Macy's/, tickets: 10},
+    {matcher: /Payless/},
     {matcher: /Pier 1 Imports/},
     {matcher: /Rite Aid/, tickets: 5},
     {matcher: /Sally's/},
