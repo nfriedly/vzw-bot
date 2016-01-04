@@ -14,7 +14,7 @@ var knownSweekstakes = [
     {matcher: /Boston Market/},
     {matcher: /Buffalo Wild Wings/, tickets: 5},
     {matcher: /Cabela'?s/},
-    {matcher: /Chick Fil A/, tickets: 20},
+    {matcher: /Chick Fil A/, tickets: 30},
     {matcher: /Cold Stone Creamery/},
     {matcher: /Cracker Barrel/, tickets: 5},
     {matcher: /Dave and Buster's/},
@@ -24,6 +24,7 @@ var knownSweekstakes = [
     {matcher: /IHOP/},
     {matcher: /Papa John's/, tickets: 5},
     {matcher: /Ritas/},
+    {matcher: /Red Robin/, tickets: 20},
     {matcher: /Starbucks/},
     {matcher: /Wendy'?s/, tickets: 10},
 
@@ -54,10 +55,12 @@ var knownSweekstakes = [
     {matcher: /Pier 1 Imports/},
     {matcher: /Rite Aid/, tickets: 5},
     {matcher: /Sally's/},
+    {matcher: /Target/, tickets: 35},
     {matcher: /Ulta Beauty/},
     {matcher: /Verizon/, tickets: 50},
     {matcher: /Walmart/, tickets: 20},
-    {matcher: /Whole Foods/, tickets: 10},
+    {matcher: /Walgreens/, tickets: 20},
+    {matcher: /Whole ?Foods/i, tickets: 10},
 
     // gas
     {matcher: /\bBP\b/, tickets: 10},
@@ -81,6 +84,7 @@ var knownSweekstakes = [
     {matcher: /Dash For Holiday Cash/i, tickets: 5},
     {matcher: /Gift For You - Gift For Charity/i, tickets: 3},
     {matcher: /Entertainment For All/, tickets: 5},
+    {matcher: /California Spa/, tickets: 5},
 ];
 
 var usageMsg = [
