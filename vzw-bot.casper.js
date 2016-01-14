@@ -22,10 +22,12 @@ var knownSweekstakes = [
     {matcher: /Dunkin Donuts/},
     {matcher: /GNC/},
     {matcher: /IHOP/},
+    {matcher: /Panera/},
     {matcher: /Papa John's/, tickets: 5},
     {matcher: /Ritas/},
     {matcher: /Red Robin/, tickets: 20},
     {matcher: /Starbucks/},
+    {matcher: /Tony Romas/},
     {matcher: /Wendy'?s/, tickets: 10},
 
     // shopping & misc.
@@ -63,9 +65,11 @@ var knownSweekstakes = [
     {matcher: /Whole ?Foods/i, tickets: 10},
 
     // gas
-    {matcher: /\bBP\b/, tickets: 10},
+    {matcher: /\bBP\b/, tickets: 30},
     {matcher: /Chevron/},
+    {matcher: /Marathon/, tickets: 30},
     {matcher: /Mobil/},
+    {matcher: /Shell Gas/, tickets: 30},
 
     //money
     {matcher: /500 Visa Gift Card/, tickets: 30, ratio: 1},
