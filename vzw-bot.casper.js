@@ -34,8 +34,9 @@ var knownSweekstakes = [
     {matcher: /AMC/},   // cinci has an amc, but meh
     {matcher: /Regal/}, // we have a cinemark and a rave (apparently owned by cinemark)
     {matcher: /Amazon/, tickets: 50, ratio: 0.2},
-    {matcher: /Barnes and Noble/, tickets: 5},
     {matcher: /AutoZone/},
+    {matcher: /Babies R Us/},
+    {matcher: /Barnes and Noble/, tickets: 5},
     {matcher: /Bass Pro Shop/},
     {matcher: /Bed Bath and Beyond/, tickets: 5},
     {matcher: /Bath & Body Works|Bath Body Works/, tickets: 5},
@@ -44,7 +45,7 @@ var knownSweekstakes = [
     {matcher: /CVS/, tickets: 10},
     {matcher: /Earring|Necklace/},
     {matcher: /Express/, tickets: 25, ratio: 0.2},
-    {matcher: /Game Stop/, tickets: 10},
+    {matcher: /Game ?Stop/i, tickets: 10},
     {matcher: /\bGap\b/, tickets: 10},
     {matcher: /Home Depot/, tickets: 10},
     {matcher: /Homegoods/},
@@ -53,6 +54,7 @@ var knownSweekstakes = [
     {matcher: /Jiffy Lube/},
     {matcher: /Kohl's/, tickets: 10},
     {matcher: /Macy's/, tickets: 10},
+    {matcher: /Nike/},
     {matcher: /Payless/},
     {matcher: /Pier 1 Imports/},
     {matcher: /Rite Aid/, tickets: 5},
