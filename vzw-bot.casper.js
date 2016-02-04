@@ -9,15 +9,16 @@ var knownSweekstakes = [
     // default ratio is 0.1 (Meaning that the script should spend a maximum of 10% of available points on a single sweepstakes in a single run.)
 
     // food (ish)
-    {matcher: /Arby'?s/}, // sometimes written as Arby's and other times Arbys
-    {matcher: /Ben and Jerry'?s/}, // sometimes Jerry's other times Jerrys - this matches both
+    {matcher: /Applebees/},
+    {matcher: /Arby'?s/},
+    {matcher: /Ben and Jerry'?s/},
     {matcher: /Boston Market/},
     {matcher: /Buffalo Wild Wings/},
     {matcher: /Cabela'?s/},
     {matcher: /Chick Fil A/, tickets: 100},
     {matcher: /Cold Stone Creamery/},
     {matcher: /Cracker Barrel/},
-    {matcher: /Dave and Buster's/},
+    {matcher: /Dave and Buster'?s/},
     {matcher: /Dennys/},
     {matcher: /Dunkin Donuts/},
     {matcher: /GNC/},
@@ -45,6 +46,7 @@ var knownSweekstakes = [
     {matcher: /CVS/, tickets: 50},
     {matcher: /Earring|Necklace/},
     {matcher: /Express/, tickets: 60, ratio: 0.2},
+    {matcher: /Footlocker/, tickets: 30},
     {matcher: /Game ?Stop/i, tickets: 50},
     {matcher: /\bGap\b/, tickets: 60},
     {matcher: /Home Depot/, tickets: 50},
@@ -91,6 +93,7 @@ var knownSweekstakes = [
     {matcher: /Gift For You - Gift For Charity/i, tickets: 3},
     {matcher: /Entertainment For All/, tickets: 5},
     {matcher: /California Spa/, tickets: 5},
+    {matcher: /Grand Canyon Family Vacation/, tickets: 1}
 ];
 
 var usageMsg = [
