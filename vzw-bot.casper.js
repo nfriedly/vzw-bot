@@ -2,9 +2,6 @@
 
 "use strict";
 
-// todo: calculate the cost and don't spend more points than I have
-// also, consider adding a way to prioritize
-
 var knownSweekstakes = [
     // default ratio is 0.1 (Meaning that the script should spend a maximum of 10% of available points on a single sweepstakes in a single run.)
 
