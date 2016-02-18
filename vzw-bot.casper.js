@@ -71,7 +71,7 @@ var knownSweekstakes = [
     {matcher: /Chevron/},
     {matcher: /Marathon/, tickets: 100},
     {matcher: /Mobil/},
-    {matcher: /Shell Gas/, tickets: 100},
+    {matcher: /Shell/, tickets: 100},
 
     //money
     {matcher: /500 Visa Gift Card/, tickets: 30, ratio: 1},
