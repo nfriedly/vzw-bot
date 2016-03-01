@@ -86,12 +86,13 @@ var knownSweekstakes = [
     {matcher: /Winter Getaway/},
     {matcher: /Tablets For All/},
     {matcher: /Macbook/i, tickets: 100, ratio: 1},
+    {matcher: /Get Your Mac On/, tickets: 100, ratio: 1},
     {matcher: /Xbox One/i, tickets: 100, ratio: 1},
     {matcher: /Dash For Holiday Cash/i, tickets: 5},
     {matcher: /Gift For You - Gift For Charity/i, tickets: 3},
     {matcher: /Entertainment For All/, tickets: 5},
     {matcher: /California Spa/, tickets: 5},
-    {matcher: /Grand Canyon Family Vacation/, tickets: 1}
+    {matcher: /Grand Canyon Family Vacation/, tickets: 1},
 ];
 
 var usageMsg = [
