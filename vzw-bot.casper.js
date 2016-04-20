@@ -293,9 +293,14 @@ casper.thenOpen('https://rewards.verizonwireless.com/gateway?viewType=&t=giveawa
                         var maxTicketsRatio = Math.round(pointsAvailable * ratio / cost);
                         numTicketsToBuy = Math.min(maxTicketsPossible, Math.min(numTicketsToBuy, maxTicketsRatio));
 
-                        this.echo("Buying " + numTicketsToBuy + " tickets for " + sweepstakes + '...');
+                        if (numTicketsToBuy > 0) {
+                            this.echo("Buying " + numTicketsToBuy + " tickets for " + sweepstakes + '...');
+                            this.fill('#form_buytickets', {ticketQty: numTicketsToBuy, agreement: true}, true);
+                        } else {
+                            this.echo("Running low on points, not buying");
+                            this.bypass(1); // don't wait for "Entered!" - it ain't gonna happen today.
+                        }
 
-                        this.fill('#form_buytickets', {ticketQty: numTicketsToBuy, agreement: true}, true);
                     });
 
                     casper.waitForSelector('#ocBox', function () {
