@@ -42,9 +42,11 @@ var knownSweekstakes = [
     {matcher: /Best Buy/},
     {matcher: /Build-A-Bear/},
     {matcher: /CVS/, tickets: 50},
+    {matcher: /Disney/},
     {matcher: /Earring|Necklace/},
     {matcher: /Express/, tickets: 60, ratio: 0.2},
-    {matcher: /Foot ?locker/, tickets: 30},
+    {matcher: /Fanatics/},
+    {matcher: /Foot ?locker/},
     {matcher: /Game ?Stop/i, tickets: 50},
     {matcher: /\bGap\b/, tickets: 60},
     {matcher: /H & M/},
@@ -53,6 +55,7 @@ var knownSweekstakes = [
     {matcher: /iTunes/i, tickets: 60, ratio: 0.2},
     {matcher: /JC Penne?y/, tickets: 50}, // verizon spells it wrong sometimes.. I almost wonder if it's on purpose
     {matcher: /Jiffy Lube/},
+    {matcher: /Kay Jewelers/},
     {matcher: /Kohl's/, tickets: 50},
     {matcher: /Macy's/, tickets: 50},
     {matcher: /Nike/},
@@ -68,6 +71,7 @@ var knownSweekstakes = [
     {matcher: /Walmart/, tickets: 75},
     {matcher: /Walgreens/, tickets: 40},
     {matcher: /Whole ?Foods/i, tickets: 30},
+    {matcher: /Zappos/i},
 
     // gas
     {matcher: /\bBP\b/, tickets: 100},
