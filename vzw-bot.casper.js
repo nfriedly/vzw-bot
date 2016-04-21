@@ -102,7 +102,7 @@ var knownSweekstakes = [
     {matcher: /Entertainment For All/, tickets: 5},
     {matcher: /California Spa/, tickets: 5},
     {matcher: /Operation: Washington DC/},
-    {matcher: /BET® Awards VIP Experience/, tickets: 1},
+    {matcher: /BET® Awards VIP Experience/},
     {matcher: /Grand Canyon Family Vacation/, tickets: 1},
 ];
 
