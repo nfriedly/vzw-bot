@@ -85,7 +85,7 @@ var knownSweekstakes = [
     {matcher: /Shell/, tickets: 100},
 
     //money
-    {matcher: /500 Visa Gift Card/, tickets: 30, ratio: 1},
+    {matcher: /Visa Gift Card/, tickets: 30, ratio: 1},
 
     // daily sweeps
     {matcher: /Samsung Galaxy Tab/, tickets: 10},
