@@ -41,6 +41,7 @@ var knownSweekstakes = [
     {matcher: /Bed Bath and Beyond/, tickets: 50},
     {matcher: /Bath (and |& )?Body Works/, tickets: 50},
     {matcher: /Best Buy/},
+    {matcher: /Brooks Brothers/, tickets: 10},
     {matcher: /Build-A-Bear/},
     {matcher: /CVS/, tickets: 50},
     {matcher: /Disney/},
@@ -57,6 +58,7 @@ var knownSweekstakes = [
     {matcher: /iTunes/i, tickets: 60, ratio: 0.2},
     {matcher: /JC Penne?y/, tickets: 50}, // verizon spells it wrong sometimes.. I almost wonder if it's on purpose
     {matcher: /Jiffy Lube/},
+    {matcher: /J\.? ?Crew/, tickets: 10},
     {matcher: /Kay Jewelers/},
     {matcher: /Kohl'?s/, tickets: 50},
     {matcher: /Lowes/, tickets: 20},
@@ -92,6 +94,8 @@ var knownSweekstakes = [
     {matcher: /LG Urbane/},
 
     // featured sweeps that are probably one-off things
+    {matcher: /Surround Yourself In Sony/, tickets: 2},
+    {matcher: /Netflix Nights/, tickets: 10},
     {matcher: /Tour of Wine Country/, tickets: 10},
     {matcher: /A Night On Broadway/, tickets: 10},
     {matcher: /Winter Getaway/},
