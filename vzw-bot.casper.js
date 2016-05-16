@@ -66,6 +66,7 @@ var knownSweekstakes = [
     {matcher: /Macy'?s/, tickets: 25},
     {matcher: /Nike/},
     {matcher: /Nordstrom/},
+    {matcher: /Oakley/},
     {matcher: /Payless/},
     {matcher: /Petsmart/, tickets: 50},
     {matcher: /Pier 1 Imports/},
