@@ -73,6 +73,7 @@ var knownSweekstakes = [
     {matcher: /Pier 1 Imports/},
     {matcher: /Rite Aid/},
     {matcher: /Sally'?s/},
+    {matcher: /Swarovski/},
     {matcher: /Stub Hub/},
     {matcher: /Target/, tickets: 10},
     {matcher: /TJ Maxx/},
