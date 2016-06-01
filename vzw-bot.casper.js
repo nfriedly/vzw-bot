@@ -103,6 +103,8 @@ var knownSweekstakes = [
     {matcher: /LG Urbane/},
 
     // featured sweeps that are probably one-off things
+    {matcher: /Discover The Magic/, tickets: 1},
+    {matcher: /Cool Cash Summer/, tickets: 5},
     {matcher: /Surround Yourself In Sony/, tickets: 2},
     {matcher: /Netflix Nights/, tickets: 10},
     {matcher: /Tour of Wine Country/, tickets: 10},
