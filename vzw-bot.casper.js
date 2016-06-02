@@ -82,7 +82,7 @@ var knownSweekstakes = [
     {matcher: /TJ Maxx/},
     {matcher: /Toys R Us/},
     {matcher: /Ulta/},
-    {matcher: /Verizon/, tickets: 75},
+    {matcher: /Verizon/, tickets: 20},
     {matcher: /Walmart/, tickets: 75},
     {matcher: /Walgreens/, tickets: 30},
     {matcher: /Whole ?Foods/i, tickets: 15},
