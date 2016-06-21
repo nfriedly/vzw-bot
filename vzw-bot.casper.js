@@ -15,6 +15,7 @@ var knownSweekstakes = [
     {matcher: /Chick Fil A/, tickets: 100},
     {matcher: /Cold Stone Creamery/},
     {matcher: /Cracker Barrel/},
+    {matcher: /Darden/}, // Ollive Garden, Longhorn, others
     {matcher: /Dave and Buster'?s/},
     {matcher: /Denny'?s/},
     {matcher: /Dunkin Donuts/},
@@ -85,6 +86,7 @@ var knownSweekstakes = [
     {matcher: /Toys R Us/},
     {matcher: /Ulta/},
     {matcher: /Verizon/, tickets: 20},
+    {matcher: /Victoria'?s? Secret/},
     {matcher: /Walmart/, tickets: 75},
     {matcher: /Walgreens/, tickets: 30},
     {matcher: /Whole ?Foods/i, tickets: 15},
