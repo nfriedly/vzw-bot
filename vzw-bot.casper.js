@@ -33,6 +33,7 @@ var knownSweekstakes = [
     {matcher: /Wendy'?s/, tickets: 10},
 
     // shopping & misc.
+    {matcher: /1-800-Flowers/},
     {matcher: /AMC/},   // cinci has an amc, but meh
     {matcher: /Regal/}, // we have a cinemark and a rave (apparently owned by cinemark)
     {matcher: /Amazon/, tickets: 100, ratio: 0.2},
