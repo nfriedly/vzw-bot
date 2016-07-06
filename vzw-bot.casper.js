@@ -13,6 +13,7 @@ var knownSweekstakes = [
     {matcher: /Buffalo Wild Wings/},
     {matcher: /Cabela'?s/},
     {matcher: /Chick Fil A/, tickets: 100},
+    {matcher: /Chipotle/, tickets: 40},
     {matcher: /Cold Stone Creamery/},
     {matcher: /Cracker Barrel/},
     {matcher: /Darden/}, // Ollive Garden, Longhorn, others
@@ -37,7 +38,7 @@ var knownSweekstakes = [
     {matcher: /AMC/},   // cinci has an amc, but meh
     {matcher: /Regal/}, // we have a cinemark and a rave (apparently owned by cinemark)
     {matcher: /Amazon/, tickets: 100, ratio: 0.2},
-    {matcher: /AutoZone/},
+    {matcher: /AutoZone/, tickets: 10},
     {matcher: /Babies R Us/},
     {matcher: /Barnes and Noble/},
     {matcher: /Bass Pro Shop/},
@@ -46,6 +47,7 @@ var knownSweekstakes = [
     {matcher: /Best Buy/},
     {matcher: /Brooks Brothers/},
     {matcher: /Build-A-Bear/},
+    {matcher: /Chromecast/, tickets: 30},
     {matcher: /CVS/, tickets: 5},
     {matcher: /Disney/},
     {matcher: /Earring|Necklace/},
@@ -77,6 +79,7 @@ var knownSweekstakes = [
     {matcher: /Payless/},
     {matcher: /Petsmart/, tickets: 50},
     {matcher: /Pier 1 Imports/},
+    {matcher: /Ray-Ban/},
     {matcher: /Rite Aid/},
     {matcher: /Sally'?s/},
     {matcher: /Swarovski/},
@@ -108,6 +111,8 @@ var knownSweekstakes = [
     {matcher: /LG Urbane/},
 
     // featured sweeps that are probably one-off things
+    {matcher: /Go Go Gadget/},
+    {matcher: /Game\. Set\. Match\./},
     {matcher: /Discover The Magic/, tickets: 1},
     {matcher: /Cool Cash Summer/, tickets: 5},
     {matcher: /Surround Yourself In Sony/, tickets: 2},
