@@ -41,7 +41,7 @@ var knownSweekstakes = [
     {matcher: /AutoZone/, tickets: 10},
     {matcher: /Babies R Us/},
     {matcher: /Barnes and Noble/},
-    {matcher: /Bass Pro Shop/},
+    {matcher: /Bass Pro/},
     {matcher: /Bed Bath and Beyond/, tickets: 5},
     {matcher: /Bath (and |& )?Body Works/, tickets: 5},
     {matcher: /Best Buy/},
@@ -186,10 +186,8 @@ casper.waitForSelector('#loginForm', function enterPassword() {
     this.click('button[type="submit"].o-red-button');
 });
 
-casper.waitForSelector('div.o-usage-data-meter-text', function() {
-    var cap = parseFloat(this.fetchText('div.o-usage-data-meter-text span').substr(3)); // parseFloat ignores trailing text :)
-    var used = parseFloat(this.fetchText('div.o-meter-innerText'));
-    this.echo('Data: ' + used + '/' + cap + ' GB');
+casper.waitForSelector('.a-usage-meter', function() {
+    this.echo('Data: ' + this.fetchText('.a-usage-meter .a-center-subtext'));
 });
 
 casper.waitForSelector('a[title="Redeem Now"]', function accountHome() {
