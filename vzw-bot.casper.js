@@ -168,10 +168,10 @@ casper.userAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:40.0) Gecko/2
 
 // sometimes verizon goes back to the "enter your username" page right after you enter your username...?
 // maybe we should start at https://login.verizonwireless.com/amserver/UI/Login ... or the home page?
-casper.thenOpen('http://www.verizonwireless.com/', function login() {
+casper.thenOpen('http://www.verizonwireless.com/b2c/myverizonlp/', function login() {
     this.echo('Logging in with username ' + username + '...');
-    this.fill('#vgnSignInForm', {IDToken1: username}, false);
-    this.click("#signInSubmitButton");
+    this.fill('#myaccountForm', {IDToken1: username}, false);
+    this.click("#signIntoMyVerizonButton");
 });
 
 casper.waitForSelector('#challengequestion', function securityQuestion() {
